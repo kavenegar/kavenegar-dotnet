@@ -1,0 +1,5 @@
+D:\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.dll
+D:\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.pdb
+D:\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.csprojResolveAssemblyReference.cache
+D:\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.dll
+D:\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.pdb
