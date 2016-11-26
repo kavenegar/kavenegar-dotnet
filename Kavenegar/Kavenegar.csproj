@@ -61,6 +61,7 @@
     <Compile Include="Models\CountInboxResult.cs" />
     <Compile Include="Models\CountOutboxResult.cs" />
     <Compile Include="Models\CountPostalCodeResult.cs" />
+    <Compile Include="Models\Enums\VerifyLookupType.cs" />
     <Compile Include="Models\Enums\MessageStatus.cs" />
     <Compile Include="Models\Enums\MessageType.cs" />
     <Compile Include="Models\Enums\MetaCode.cs" />

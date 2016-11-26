@@ -541,10 +541,17 @@ namespace Kavenegar
 
 	public SendResult VerifyLookup(string receptor, string token, string template)
 	{
-	 return VerifyLookup(receptor, token, null, null, template);
+	 return VerifyLookup(receptor, token, null, null, template, VerifyLookupType.Sms);
 	}
-
-	public SendResult VerifyLookup(string receptor,string token, string token2, string token3, string template)
+	public SendResult VerifyLookup(string receptor, string token, string template,VerifyLookupType type)
+	{
+	 return VerifyLookup(receptor, token, null, null, template, type);
+	}
+	public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string template)
+	{
+	 return VerifyLookup(receptor, token, token2, token3, template, VerifyLookupType.Sms);
+	}
+	public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string template, VerifyLookupType type)
 	{
 	 var path = GetApiPath("verify", "lookup", "json");
 	 var param = new Dictionary<string, object>  
@@ -554,7 +561,7 @@ namespace Kavenegar
 			{"token", token},
 			{"token2", token2},
 			{"token3", token3},
-
+			{"type", type},
 		};
 	 var responsebody = Execute(path, param);
 	 var jsonSerialiser = new JavaScriptSerializer();
