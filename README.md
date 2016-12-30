@@ -8,7 +8,7 @@ First of all, You need to make an account on Kavenegar from <a href="https://pan
 </p>
 <p>
 After that you just need to pick API-KEY up from <a href="http://panel.kavenegar.com/Client/setting/index">My Account</a> section.
-Here You can download the C# SDK <a href="https://raw.githubusercontent.com/KaveNegar/kavenegar-csharp/master/Kavenegar/bin/Debug/Kavenegar.dll">Here</a> or just pull it.
+You can download the C# SDK <a href="https://raw.githubusercontent.com/KaveNegar/kavenegar-csharp/master/Kavenegar/bin/Debug/Kavenegar.dll">Here</a> or just pull it.
 Anyway there is good tutorial about <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  request</a>
 </p>
 
@@ -40,10 +40,10 @@ catch (Kavenegar.Exceptions.HttpException ex)
 Bug fixes, docs, and enhancements welcome! Please let us know <a href="mailto:support@kavenegar.com?Subject=SDK" target="_top">support@kavenegar.com</a>
 
 
-
+<div dir="rtl">
 ## Persian tutorial / راهنمای فارسی
 ###راهنما
-در صورتی که مایل هستید راهنمای فارسی کیت توسعه کاوه نگار را مطالعه کنید به سفحه 
+در صورتی که مایل هستید راهنمای فارسی کیت توسعه کاوه نگار را مطالعه کنید به صفحه 
 <a href="http://kavenegar.com/sdk.html">کد ارسال پیامک</a>
 مراجعه کنید
 
@@ -51,7 +51,7 @@ Bug fixes, docs, and enhancements welcome! Please let us know <a href="mailto:su
 <p>
 برای مطالعه مستندات کار با 
 <a href="http://kavenegar.com"  target="_blank">وب سرویس اس ام اس</a>
-کاوه نگار به سفحه <a href="http://kavenegar.com/rest.html">مستندات</a>مراجعه کنید
+کاوه نگار به صفحه <a href="http://kavenegar.com/rest.html">مستندات</a>مراجعه کنید
 </p>
 ###معرفی وب سرویس کاوه نگار
 <p>
@@ -68,3 +68,4 @@ Bug fixes, docs, and enhancements welcome! Please let us know <a href="mailto:su
 <a href="mailto:support@kavenegar.com">support@kavenegar.com</a>
 
 </p>
+</div>
