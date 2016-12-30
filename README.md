@@ -57,7 +57,6 @@ Bug fixes, docs, and enhancements welcome! Please let us know <a href="mailto:su
 <p>و بالاخره اگر در استفاده از سرویس کاوه نگار مشکلی داشتید یا پیشنهاد همکاری  بود لطفا حتما به ما اطلاع دهید.</p>
 <p><a href="mailto:support@kavenegar.com">support@kavenegar.com</a></p>
 </div>
-r.com">support@kavenegar.com</a>
 
 </p>
 </div>
