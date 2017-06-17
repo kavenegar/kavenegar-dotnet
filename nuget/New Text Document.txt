@@ -1,4 +1,0 @@
-nuget pack kavenegar.nuspec
-
-//nuget.exe setApiKey 6282a0d5-5a5f-4b3d-a89e-19fe06fa0597
-nuget.exe push Kavenegar.1.0.5.nupkg
