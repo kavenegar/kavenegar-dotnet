@@ -6,3 +6,12 @@ D:\Projects\SDK\--\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.dll
 D:\Projects\SDK\--\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.pdb
 D:\Projects\SDK\--\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.dll
 D:\Projects\SDK\--\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.pdb
+D:\Projects\github\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.dll
+D:\Projects\github\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.pdb
+D:\Projects\github\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.dll
+D:\Projects\github\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.pdb
+C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.dll
+C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\bin\Debug\Kavenegar.pdb
+C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.csprojResolveAssemblyReference.cache
+C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.dll
+C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.pdb

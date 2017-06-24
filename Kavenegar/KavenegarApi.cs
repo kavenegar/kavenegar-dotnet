@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Web.Script.Serialization;
 using System.Net;
+using System.Text;
 using Kavenegar.Exceptions;
 using Kavenegar.Models;
 using Kavenegar.Models.Enums;
@@ -82,6 +85,7 @@ namespace Kavenegar
         private int _returnCode = 200;
         private string _returnMessage = "";
         private const string Apipath = "http://api.kavenegar.com/v1/{0}/{1}/{2}.{3}";
+        private static readonly JavaScriptSerializer JsonSerialiser = new JavaScriptSerializer();
         public KavenegarApi(string apikey)
         {
             _apikey = apikey;
@@ -89,8 +93,8 @@ namespace Kavenegar
 
         public string ApiKey
         {
-            set { _apikey = value; }
-            get { return _apikey; }
+            set => _apikey = value;
+            get => _apikey;
         }
 
         public int ReturnCode
@@ -110,30 +114,67 @@ namespace Kavenegar
             return string.Format(Apipath, _apikey, _base, method, output);
         }
 
-        private string Execute(string path, Dictionary<string, object> _params)
+        private static string Execute(string path, Dictionary<string, object> _params)
         {
+
+            string responseBody = "";
+            string postdata = "";
+
+            byte[] byteArray;
+            if (_params != null)
+            {
+                postdata = _params.Keys.Aggregate(postdata,
+                    (current, key) => current + string.Format("{0}={1}&", key, _params[key]));
+                byteArray = Encoding.UTF8.GetBytes(postdata);
+            }
+            else
+            {
+                byteArray = new byte[0];
+            }
+            var webRequest = (HttpWebRequest)WebRequest.Create(path);
+            webRequest.Method = "POST";
+            webRequest.Timeout = -1;
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.ContentLength = byteArray.Length;
+            using (Stream webpageStream = webRequest.GetRequestStream())
+            {
+                webpageStream.Write(byteArray, 0, byteArray.Length);
+            }
+            HttpWebResponse webResponse;
             try
             {
-                var responseBody = RestHelper.SendPost(path, _params);
-                var jsonSerialiser = new JavaScriptSerializer();
-                var result = jsonSerialiser.Deserialize<ReturnResult>(responseBody);
-                if (result.Return.status != 200)
+                using (webResponse = (HttpWebResponse)webRequest.GetResponse())
                 {
-                    _returnMessage = result.Return.message;
-                    _returnCode = result.Return.status;
-                    throw new ApiException(_returnMessage, _returnCode);
+                    using (var reader = new StreamReader(webResponse.GetResponseStream()))
+                    {
+                        responseBody = reader.ReadToEnd();
+                    }
                 }
+                JsonSerialiser.Deserialize<ReturnResult>(responseBody);
                 return responseBody;
             }
-            catch (WebException ex)
+            catch (WebException webException)
             {
-                var res = (HttpWebResponse)ex.Response;
-                throw new HttpException(ex.Message, (int)res.StatusCode);
+                webResponse = (HttpWebResponse)webException.Response;
+                using (var reader = new StreamReader(webResponse.GetResponseStream()))
+                {
+                    responseBody = reader.ReadToEnd();
+                }
+                try
+                {
+                    var result = JsonSerialiser.Deserialize<ReturnResult>(responseBody);
+                    throw new ApiException(result.Return.message, result.Return.status);
+                }
+                catch (ApiException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw new HttpException(ex.Message, (int)((HttpWebResponse)webException.Response).StatusCode);
+                }
             }
-
         }
-
-
         public List<SendResult> Send(string sender, List<string> receptor, string message)
         {
             return Send(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue);
@@ -563,7 +604,7 @@ namespace Kavenegar
 
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string token10, string template, VerifyLookupType type)
         {
-            return VerifyLookup(receptor, token, token2, token3, token10,null,template, type);
+            return VerifyLookup(receptor, token, token2, token3, token10, null, template, type);
         }
 
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string token10, string token20, string template, VerifyLookupType type)
@@ -584,6 +625,60 @@ namespace Kavenegar
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
             return l.entries[0];
-        } 
+        }
+        
+        public List<SendResult> CallMakeTTS(List<string> receptor, string message)
+        {
+            var path = GetApiPath("call", "maketts", "json");
+            var param = new Dictionary<string, object>
+            {
+                { "receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
+                {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)}
+            };
+
+            var responseBody = Execute(path, param);
+            var jsonSerialiser = new JavaScriptSerializer();
+            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
+            return l.entries ?? new List<SendResult>();
+        }
+
+        public List<SendResult> CallMakeTTS(List<string> receptor, string message, DateTime date)
+        {
+            var path = GetApiPath("call", "maketts", "json");
+            var param = new Dictionary<string, object>
+            {
+                {"receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
+                {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)},
+                {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
+            };
+            
+            var responseBody = Execute(path, param);
+            var jsonSerialiser = new JavaScriptSerializer();
+            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
+            return l.entries ?? new List<SendResult>();
+        }
+
+        public List<SendResult> CallMakeTTS( List<string> receptor, string message, DateTime date, List<string> localids)
+        {
+            var path = GetApiPath("call", "maketts", "json");
+            var param = new Dictionary<string, object>
+            {
+                {"receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
+                {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)},
+                {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
+            };
+            if (localids != null && localids.Count > 0)
+            {
+                param.Add("localid", StringHelper.Join(",", localids.ToArray()));
+            }
+            var responseBody = Execute(path, param);
+            var jsonSerialiser = new JavaScriptSerializer();
+            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
+            return l.entries ?? new List<SendResult>();
+        }
+
+
+
+
     }
 }
