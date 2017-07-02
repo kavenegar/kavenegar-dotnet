@@ -230,7 +230,7 @@ namespace Kavenegar
             var responseBody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
-            return l.entries ?? new List<SendResult>();
+            return l.entries;
         }
 
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages)
@@ -360,7 +360,7 @@ namespace Kavenegar
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnStatusLocalMessageId>(responsebody);
-            return l.entries ?? new List<StatusLocalMessageIdResult>();
+            return l.entries;
         }
 
         public StatusLocalMessageIdResult StatusLocalMessageId(string messageid)
@@ -412,7 +412,7 @@ namespace Kavenegar
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
-            return l.entries ?? new List<SendResult>();
+            return l.entries;
         }
 
         public List<SendResult> LatestOutbox(long pagesize)
@@ -427,7 +427,7 @@ namespace Kavenegar
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
-            return l.entries ?? new List<SendResult>();
+            return l.entries;
         }
 
         public CountOutboxResult CountOutbox(DateTime startdate)
@@ -516,7 +516,7 @@ namespace Kavenegar
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnCountInbox>(responsebody);
-            return l.entries[0] ?? new CountInboxResult();
+            return l.entries[0];
         }
 
         public List<CountPostalCodeResult> CountPostalCode(long postalcode)
@@ -526,7 +526,7 @@ namespace Kavenegar
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnCountPostalCode>(responsebody);
-            return l.entries ?? new List<CountPostalCodeResult>();
+            return l.entries;
         }
 
         public List<SendResult> SendByPostalCode(long postalcode, String sender, String message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount)
@@ -551,7 +551,7 @@ namespace Kavenegar
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
             var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
-            return l.entries ?? new List<SendResult>();
+            return l.entries;
         }
 
         public AccountInfoResult AccountInfo()
@@ -627,58 +627,36 @@ namespace Kavenegar
             return l.entries[0];
         }
         
-        public List<SendResult> CallMakeTTS(List<string> receptor, string message)
-        {
-            var path = GetApiPath("call", "maketts", "json");
-            var param = new Dictionary<string, object>
-            {
-                { "receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
-                {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)}
-            };
+        
+        #region << CallMakeTTS >>
 
-            var responseBody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
-            return l.entries ?? new List<SendResult>();
+        public SendResult CallMakeTTS(string message, string receptor)
+        {
+            return CallMakeTTS(message, new List<string> { receptor }, null, null)[0];
+        }
+        public List<SendResult> CallMakeTTS(string message, List<string> receptor)
+        {
+            return CallMakeTTS(message, receptor, null, null);
         }
 
-        public List<SendResult> CallMakeTTS(List<string> receptor, string message, DateTime date)
+        public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
             var path = GetApiPath("call", "maketts", "json");
             var param = new Dictionary<string, object>
             {
-                {"receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
+                {"receptor", StringHelper.Join(",", receptor.ToArray())},
                 {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)},
-                {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
             };
-            
+            if (date != null)
+                param.Add("date", DateHelper.DateTimeToUnixTimestamp(date.Value));
+            if (localid != null && localid.Count > 0)
+                param.Add("localid", StringHelper.Join(",", localid.ToArray()));
             var responseBody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
-            return l.entries ?? new List<SendResult>();
+
+            return JsonSerialiser.Deserialize<ReturnSend>(responseBody).entries;
         }
 
-        public List<SendResult> CallMakeTTS( List<string> receptor, string message, DateTime date, List<string> localids)
-        {
-            var path = GetApiPath("call", "maketts", "json");
-            var param = new Dictionary<string, object>
-            {
-                {"receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
-                {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)},
-                {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
-            };
-            if (localids != null && localids.Count > 0)
-            {
-                param.Add("localid", StringHelper.Join(",", localids.ToArray()));
-            }
-            var responseBody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
-            return l.entries ?? new List<SendResult>();
-        }
-
-
-
+        #endregion << CallMakeTTS >>
 
     }
 }
