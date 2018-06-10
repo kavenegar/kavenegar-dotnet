@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kavenegar", "Kavenegar\Kavenegar.csproj", "{28209ADB-60BA-4E6C-B802-B2CC0AB85181}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kavenegar-Core", "Kavenegar-Core\Kavenegar-Core.csproj", "{80B46FC1-6086-418C-AC71-A2F2F98D4A57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{28209ADB-60BA-4E6C-B802-B2CC0AB85181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28209ADB-60BA-4E6C-B802-B2CC0AB85181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28209ADB-60BA-4E6C-B802-B2CC0AB85181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B46FC1-6086-418C-AC71-A2F2F98D4A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B46FC1-6086-418C-AC71-A2F2F98D4A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B46FC1-6086-418C-AC71-A2F2F98D4A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B46FC1-6086-418C-AC71-A2F2F98D4A57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CEB992F-125F-49FA-AA0F-F9E956AC5BD2}
 	EndGlobalSection
 EndGlobal

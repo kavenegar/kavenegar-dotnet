@@ -1,0 +1,9 @@
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\bin\Debug\netstandard2.0\Kavenegar-Core.deps.json
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\bin\Debug\netstandard2.0\Kavenegar-Core.dll
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\bin\Debug\netstandard2.0\Kavenegar-Core.pdb
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\obj\Debug\netstandard2.0\Kavenegar-Core.csprojResolveAssemblyReference.cache
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\obj\Debug\netstandard2.0\Kavenegar-Core.csproj.CoreCompileInputs.cache
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\obj\Debug\netstandard2.0\Kavenegar-Core.AssemblyInfoInputs.cache
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\obj\Debug\netstandard2.0\Kavenegar-Core.AssemblyInfo.cs
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\obj\Debug\netstandard2.0\Kavenegar-Core.dll
+E:\pfm\MnChat\Kavenegar\Kavenegar-Core\obj\Debug\netstandard2.0\Kavenegar-Core.pdb
