@@ -2,6 +2,16 @@
 using System.Globalization;
 namespace Kavenegar.Utils
 {
+
+    public class DateHelper
+    {
+        [Obsolete(message: "This method is deprecated. Use UnixTimestampToDateTime extension method from DateExtensions class.")]
+        public static DateTime UnixTimestampToDateTime(long unixTimeStamp) => unixTimeStamp.UnixTimestampToDateTime();
+
+        [Obsolete(message: "This method is deprecated. Use DateTimeToUnixTimestamp extension method from DateExtensions class.")]
+        public static long DateTimeToUnixTimestamp(DateTime idateTime) => idateTime.DateTimeToUnixTimestamp();
+    }
+
     public static class DateExtensions
     {
         public static DateTime UnixTimestampToDateTime(this long unixTimeStamp)
