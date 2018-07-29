@@ -11,8 +11,8 @@ namespace Kavenegar.Models
 
         public DateTime GregorianDate
         {
-            get { return Date.UnixTimestampToDateTime(); }
-            set { Date = value.DateTimeToUnixTimestamp(); }
+            get => Date.UnixTimestampToDateTime();
+            set => Date = value.DateTimeToUnixTimestamp();
         }
 
         public long Date { get; set; }
