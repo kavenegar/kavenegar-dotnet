@@ -56,6 +56,7 @@
     <Compile Include="Json\JsonString.cs" />
     <Compile Include="Json\Parser.cs" />
     <Compile Include="KavenegarApi.cs" />
+    <Compile Include="KavenegarApiReturn.cs" />
     <Compile Include="Models\AccountConfigResult.cs" />
     <Compile Include="Models\AccountInfoResult.cs" />
     <Compile Include="Models\CountInboxResult.cs" />
