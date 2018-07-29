@@ -2,19 +2,19 @@
 
 namespace Kavenegar.Json
 {
- public class JsonNullable : JsonObject
- {
-	public String Nullable { get; set; }
+    public class JsonNullable : JsonObject
+    {
+        public string Nullable { get; set; }
 
-	public JsonNullable()
-	{
-	 Nullable = "Null";
-	}
+        public JsonNullable()
+        {
+            Nullable = "Null";
+        }
 
-	public JsonObject UpCast()
-	{
-	 JsonObject objectJ = this;
-	 return objectJ;
-	}
- }
+        public JsonObject UpCast()
+        {
+            JsonObject objectJ = this;
+            return objectJ;
+        }
+    }
 }

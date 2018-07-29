@@ -3,98 +3,45 @@ using System.Collections.Generic;
 
 namespace Kavenegar.Json
 {
- /// <summary>
- /// JsonObject is the base class.
- /// JsonString,JsonNumber,JsonBoolean,JsonNullable and JsonArray inherits from JsonObject.
- /// A JsonArray object may contain objects of the base class
- /// </summary>
+    /// <summary>
+    /// JsonObject is the base class.
+    /// JsonString,JsonNumber,JsonBoolean,JsonNullable and JsonArray inherits from JsonObject.
+    /// A JsonArray object may contain objects of the base class
+    /// </summary>
 
- public class JsonObject
- {
-	public Dictionary<String, JsonObject> Values;
+    public class JsonObject
+    {
+        public Dictionary<string, JsonObject> Values;
 
-	public JsonObject()
-	{
-	 Values = new Dictionary<String, JsonObject>();
-	}
+        public JsonObject()
+        {
+            Values = new Dictionary<string, JsonObject>();
+        }
 
-	public void AddJsonValue(String textTag, JsonObject newObject)
-	{
-	 if (!Values.ContainsKey(textTag))
-	 {
-		Values.Add(textTag, newObject);
-	 }
-	}
+        public void AddJsonValue(string textTag, JsonObject newObject)
+        {
+            if (!Values.ContainsKey(textTag)) Values.Add(textTag, newObject);
+        }
 
-	public JsonObject GetObject(String key)
-	{
-	 JsonObject current = Values[key];
-	 return current;
-	}
+        public JsonObject GetObject(string key) => Values[key];
 
-	public int ElementsOfDictionary()
-	{
-	 return Values.Count;
-	}
+        public int ElementsOfDictionary() => Values.Count;
 
+        public bool IsJsonString() => this is JsonString;
 
-	public Boolean IsJsonString()
-	{
-	 if (this is JsonString)
-	 {
-		return true;
-	 }
-	 return false;
-	}
+        public bool IsJsonNumber() => this is JsonNumber;
 
-	public Boolean IsJsonNumber()
-	{
-	 if (this is JsonNumber)
-	 {
-		return true;
-	 }
-	 return false;
-	}
+        public bool IsJsonBoolean() => this is JsonBoolean;
 
-	public Boolean IsJsonBoolean()
-	{
-	 if (this is JsonBoolean)
-	 {
-		return true;
-	 }
-	 return false;
-	}
+        public bool IsJsonNullable() => this is JsonNullable;
 
-	public Boolean IsJsonNullable()
-	{
-	 if (this is JsonNullable)
-	 {
-		return true;
-	 }
-	 return false;
-	}
+        public bool IsJsonArray() => this is JsonArray;
 
-	public Boolean IsJsonArray()
-	{
-	 if (this is JsonArray)
-	 {
-		return true;
-	 }
-	 return false;
-	}
+        public JsonString GetAsString() => (JsonString)this;
 
-	public JsonString GetAsString()
-	{
-	 return (JsonString)this;
-	}
-	public JsonNumber GetAsNumber()
-	{
-	 return (JsonNumber)this;
-	}
-	public JsonArray GetAsArray()
-	{
-	 return (JsonArray)this;
-	}
- }
+        public JsonNumber GetAsNumber() => (JsonNumber)this;
+
+        public JsonArray GetAsArray() => (JsonArray)this;
+    }
 }
 
