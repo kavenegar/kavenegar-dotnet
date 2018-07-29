@@ -221,7 +221,7 @@ namespace Kavenegar
             {"receptor", System.Web.HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray()))},
             {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)},
             {"type", (int) type},
-            {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
+            {"date", date == DateTime.MinValue ? 0 : date.DateTimeToUnixTimestamp() }
         };
             if (localids != null && localids.Count > 0)
             {
@@ -313,7 +313,7 @@ namespace Kavenegar
             {"sender", jsonSenders},
             {"receptor", jsonReceptors},
             {"type", jsonTypes},
-            {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
+            {"date", date == DateTime.MinValue ? 0 : date.DateTimeToUnixTimestamp() }
         };
             if (localmessageids != null && localmessageids.Count > 0)
             {
@@ -405,8 +405,8 @@ namespace Kavenegar
             String path = GetApiPath("sms", "selectoutbox", "json");
             var param = new Dictionary<string, object>
          {
-             {"startdate", startdate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(startdate)},
-             {"enddate", enddate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(enddate)},
+             {"startdate", startdate == DateTime.MinValue ? 0 : startdate.DateTimeToUnixTimestamp() },
+             {"enddate", enddate == DateTime.MinValue ? 0 : enddate.DateTimeToUnixTimestamp() },
              {"sender", sender}
          };
             var responsebody = Execute(path, param);
@@ -445,8 +445,8 @@ namespace Kavenegar
             string path = GetApiPath("sms", "countoutbox", "json");
             var param = new Dictionary<string, object>
          {
-             {"startdate", startdate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(startdate)},
-             {"enddate", enddate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(enddate)},
+             {"startdate", startdate == DateTime.MinValue ? 0 : startdate.DateTimeToUnixTimestamp() },
+             {"enddate", enddate == DateTime.MinValue ? 0 : enddate.DateTimeToUnixTimestamp() },
              {"status", status}
          };
             var responsebody = Execute(path, param);
@@ -508,8 +508,8 @@ namespace Kavenegar
             var path = GetApiPath("sms", "countoutbox", "json");
             var param = new Dictionary<string, object>
         {
-            {"startdate", startdate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(startdate)},
-            {"enddate", enddate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(enddate)},
+            {"startdate", startdate == DateTime.MinValue ? 0 : startdate.DateTimeToUnixTimestamp() },
+            {"enddate", enddate == DateTime.MinValue ? 0 : enddate.DateTimeToUnixTimestamp() },
             {"linenumber", linenumber},
             {"isread", isread}
         };
@@ -546,7 +546,7 @@ namespace Kavenegar
             {"mcicount", mcicount},
             {"mtnstartindex", mtnstartindex},
             {"mtncount", mtncount},
-            {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
+            {"date", date == DateTime.MinValue ? 0 : date.DateTimeToUnixTimestamp() }
         };
             var responsebody = Execute(path, param);
             var jsonSerialiser = new JavaScriptSerializer();
@@ -626,8 +626,7 @@ namespace Kavenegar
             var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
             return l.entries[0];
         }
-        
-        
+
         #region << CallMakeTTS >>
 
         public SendResult CallMakeTTS(string message, string receptor)
@@ -648,7 +647,7 @@ namespace Kavenegar
                 {"message", System.Web.HttpUtility.UrlEncodeUnicode(message)},
             };
             if (date != null)
-                param.Add("date", DateHelper.DateTimeToUnixTimestamp(date.Value));
+                param.Add("date", date.Value.DateTimeToUnixTimestamp());
             if (localid != null && localid.Count > 0)
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
             var responseBody = Execute(path, param);
