@@ -241,13 +241,13 @@ namespace Kavenegar
             var jsonMessages = jsonSerialiser.Serialize(messages);
             var jsonTypes = jsonSerialiser.Serialize(types);
             var param = new Dictionary<string, object>
-        {
-            ["message"] = jsonMessages,
-            ["sender"] = jsonSenders,
-            ["receptor"] = jsonReceptors,
-            ["type"] = jsonTypes,
-            ["date"] = date == DateTime.MinValue ? 0 : date.DateTimeToUnixTimestamp()
-        };
+            {
+                ["message"] = jsonMessages,
+                ["sender"] = jsonSenders,
+                ["receptor"] = jsonReceptors,
+                ["type"] = jsonTypes,
+                ["date"] = date == DateTime.MinValue ? 0 : date.DateTimeToUnixTimestamp()
+            };
             if (localmessageids != null && localmessageids.Count > 0)
             {
                 param.Add("localmessageids", localmessageids.ToArray().Join(","));
