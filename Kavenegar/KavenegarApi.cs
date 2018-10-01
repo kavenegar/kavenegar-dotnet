@@ -84,7 +84,7 @@ namespace Kavenegar
         private string _apikey;
         private int _returnCode = 200;
         private string _returnMessage = "";
-        private const string Apipath = "http://api.kavenegar.com/v1/{0}/{1}/{2}.{3}";
+        private const string Apipath = "https://api.kavenegar.com/v1/{0}/{1}/{2}.{3}";
         private static readonly JavaScriptSerializer JsonSerialiser = new JavaScriptSerializer();
         public KavenegarApi(string apikey)
         {

@@ -16,3 +16,9 @@ C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.csprojRe
 C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.dll
 C:\Users\Elecomp\Desktop\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.pdb
 D:\Projects\github\kavenegar-csharp\Kavenegar\obj\Debug\Kavenegar.csprojResolveAssemblyReference.cache
+D:\Projects\kavenegar\kavenegar-dotnet\Kavenegar\bin\Debug\Kavenegar.dll
+D:\Projects\kavenegar\kavenegar-dotnet\Kavenegar\bin\Debug\Kavenegar.pdb
+D:\Projects\kavenegar\kavenegar-dotnet\Kavenegar\obj\Debug\Kavenegar.csprojResolveAssemblyReference.cache
+D:\Projects\kavenegar\kavenegar-dotnet\Kavenegar\obj\Debug\Kavenegar.csproj.CoreCompileInputs.cache
+D:\Projects\kavenegar\kavenegar-dotnet\Kavenegar\obj\Debug\Kavenegar.dll
+D:\Projects\kavenegar\kavenegar-dotnet\Kavenegar\obj\Debug\Kavenegar.pdb
