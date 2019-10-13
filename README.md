@@ -9,7 +9,7 @@ First of all, You need to make an account on Kavenegar from <a href="https://pan
 </p>
 <p>
 After that you just need to pick API-KEY up from <a href="http://panel.kavenegar.com/Client/setting/index">My Account</a> section.
-You can download the C# SDK <a href="https://raw.githubusercontent.com/KaveNegar/kavenegar-csharp/master/Kavenegar/bin/Debug/Kavenegar.dll">Here</a> or just pull it.
+You can download the C# SDK <a href="Kavenegar.dll">Here</a> or just pull it.
 Anyway there is good tutorial about <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  request</a>
 </p>
 
