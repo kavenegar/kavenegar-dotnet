@@ -1,7 +1,7 @@
-# Dotnet SDK
+# Dotnet SDK - Compatible with .NET Core and Full .NET Framework
 
 # <a href="http://kavenegar.com/rest.html">Kavenegar RESTful API Document</a>
-If you need to future information about API document Please visit RESTful Document
+If you need information about API document Please visit RESTful Document at <a href="https://kavenegar.com/">Kavenegar</a>
 
 ## Installation
 <p>
@@ -9,20 +9,97 @@ First of all, You need to make an account on Kavenegar from <a href="https://pan
 </p>
 <p>
 After that you just need to pick API-KEY up from <a href="http://panel.kavenegar.com/Client/setting/index">My Account</a> section.
+
 You can download the C# SDK <a href="https://raw.githubusercontent.com/KaveNegar/kavenegar-csharp/master/Kavenegar/bin/Debug/Kavenegar.dll">Here</a> or just pull it.
-Anyway there is good tutorial about <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  request</a>
+
+We also accept <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  Requests</a> .
 </p>
 
-## Usage
-Well, There is an example to Send SMS by C#.
+## Usage For ASP.NET Core
+
+If you are using `ASP.NET Core` you can configure the services in your `statrtup.cs`.
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+	.
+	.
+	.
+	services.AddKavenegar(settings => settings.ApiKey = "YOUR_API_KEY");
+}
+```
+
+Then you can use dependency injection to get the service:
+
+```c#
+public class MyController : Controller
+{
+	public IKavenegarApi Api { get; }
+
+	MyController(IKavenegarApi api)
+	{
+		this.Api = api;
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> SendSms()
+	{
+		try
+		{
+			var result = await this.Api.SendAsync("SenderLine", "Your Receptor", "خدمات پیام کوتاه کاوه نگار");
+			foreach (var r in result)
+			{
+				Console.Write(r.Messageid.ToString());
+		    }
+			return Ok();
+		}
+		catch (Kavenegar.Exceptions.ApiException ex) 
+		{
+			// در صورتی که خروجی وب سرویس 200 نباشد این خطارخ می دهد.
+			Console.Write("Message : " + ex.Message);
+			return BadRequest();
+		}
+		catch (Kavenegar.Exceptions.HttpException ex) 
+		{
+			// در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
+			Console.Write("Message : " + ex.Message);
+		}
+
+		return StatusCode(500);
+	}
+}
+```
+
+
+----
+
+## Usage For .NET Franework ( Anything except .NET Core which supports .NET Standard 2.0)
+
+If you are not using `ASP.NET Core` e.g `ASP.NET Web API` you should pass Options and your own implementation of `System.Net.Http.IHttpClientFactory` to `Kavenegar.KavenegarApi`'s Constructor.
+
+```c#
+public class MyHttpClientFactory : System.Net.Http.IHttpClientFactory
+{
+	public HttpClient CreateClient(string name)
+	{
+		return new HttpClient();
+	}
+}
+```
 
 ```c#
 try
 {
-	Kavenegar.KavenegarApi api = new Kavenegar.KavenegarApi("Your Api Key");
-	var result = api.Send("SenderLine", "Your Receptor", "خدمات پیام کوتاه کاوه نگار");
+	var options = Microsoft.Extensions.Options.Options.Create(new KavenegarSettings
+	{
+		ApiKey = "YOUR_API_KEY"
+	});
+	Kavenegar.KavenegarApi api = new KavenegarApi(options, new MyHttpClientFactory());
+
+	var result = await api.SendAsync("SenderLine", "Your Receptor", "خدمات پیام کوتاه کاوه نگار");
+
 	foreach (var r in result){
-	  Console.Write("r.Messageid.ToString()");
+	  Console.Write(r.Messageid.ToString());
   }
 }
 catch (Kavenegar.Exceptions.ApiException ex) 
@@ -38,7 +115,7 @@ catch (Kavenegar.Exceptions.HttpException ex)
 ```
 
 ## Contribution
-Bug fixes, docs, and enhancements welcome! Please let us know <a href="mailto:support@kavenegar.com?Subject=SDK" target="_top">support@kavenegar.com</a>
+Bug fixes, docs, and enhancements are welcome! Please let us know <a href="mailto:support@kavenegar.com?Subject=SDK" target="_top">support@kavenegar.com</a>
 <hr>
 <div dir='rtl'>
 	
