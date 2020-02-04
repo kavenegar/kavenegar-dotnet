@@ -39,7 +39,7 @@ namespace Kavenegar
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var keyValues = @params?.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
+            var keyValues = @params?.Select(x => new KeyValuePair<string, string>(x.Key, x.Value?.ToString()));
             var content = keyValues == null ? null : new FormUrlEncodedContent(keyValues);
             var request = new HttpRequestMessage(HttpMethod.Post, path)
             {
