@@ -4,7 +4,7 @@ namespace Kavenegar.Models.Internal
 {
     internal class ReturnReceive
     {
-        public Result result { get; set; }
-        public List<ReceiveResult> entries { get; set; }
+        public Result Return { get; set; }
+        public List<ReceiveResult> Entries { get; set; }
     }
 }

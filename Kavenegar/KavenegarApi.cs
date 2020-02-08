@@ -59,7 +59,7 @@ namespace Kavenegar
                 {
                     var body = await resp.Content.ReadAsStringAsync();
                     var result = System.Text.Json.JsonSerializer.Deserialize<ReturnResult>(body, jsonOptions);
-                    throw new ApiException(result.Return.message, result.Return.status);
+                    throw new ApiException(result.Return.Message, result.Return.Status);
                 }
                 catch (ApiException)
                 {
@@ -129,7 +129,7 @@ namespace Kavenegar
             }
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages, CancellationToken cancellationToken = default)
         {
@@ -214,11 +214,11 @@ namespace Kavenegar
 
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<SendResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         #endregion
@@ -240,11 +240,11 @@ namespace Kavenegar
         };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnStatus>(responseBody, jsonOptions);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<StatusResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<List<StatusLocalMessageIdResult>> StatusLocalMessageIdAsync(List<string> messageids, CancellationToken cancellationToken = default)
@@ -253,7 +253,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "localid", string.Join(",", messageids.ToArray()) } };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnStatusLocalMessageId>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<StatusLocalMessageIdResult> StatusLocalMessageIdAsync(string messageid, CancellationToken cancellationToken = default)
@@ -277,7 +277,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "messageid", string.Join(",", messageids.ToArray()) } };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            return l.entries ?? new List<SendResult>();
+            return l.Entries ?? new List<SendResult>();
         }
 
         public async Task<List<SendResult>> SelectOutboxAsync(DateTime startdate, CancellationToken cancellationToken = default)
@@ -301,7 +301,7 @@ namespace Kavenegar
          };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<List<SendResult>> LatestOutboxAsync(long pagesize, CancellationToken cancellationToken = default)
@@ -315,7 +315,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "pagesize", pagesize }, { "sender", sender } };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<CountOutboxResult> CountOutboxAsync(DateTime startdate, CancellationToken cancellationToken = default)
@@ -339,11 +339,11 @@ namespace Kavenegar
          };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnCountOutbox>(responseBody, jsonOptions);
-            if (l.entries?[0] == null)
+            if (l.Entries?[0] == null)
             {
                 return new CountOutboxResult();
             }
-            return l.entries[0];
+            return l.Entries[0];
         }
 
         public async Task<List<StatusResult>> CancelAsync(List<string> ids, CancellationToken cancellationToken = default)
@@ -355,7 +355,7 @@ namespace Kavenegar
         };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnStatus>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<StatusResult> CancelAsync(string messageid, CancellationToken cancellationToken = default)
@@ -371,11 +371,11 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "linenumber", line }, { "isread", isread } };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnReceive>(responseBody, jsonOptions);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<ReceiveResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<CountInboxResult> CountInboxAsync(DateTime startdate, string linenumber, CancellationToken cancellationToken = default)
@@ -400,7 +400,7 @@ namespace Kavenegar
         };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnCountInbox>(responseBody, jsonOptions);
-            return l.entries[0];
+            return l.Entries[0];
         }
 
         public async Task<List<CountPostalCodeResult>> CountPostalCodeAsync(long postalcode, CancellationToken cancellationToken = default)
@@ -409,7 +409,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "postalcode", postalcode } };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnCountPostalCode>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         public async Task<List<SendResult>> SendByPostalCodeAsync(long postalcode, string sender, string message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount, CancellationToken cancellationToken = default)
@@ -433,7 +433,7 @@ namespace Kavenegar
         };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         #region Account
@@ -443,7 +443,7 @@ namespace Kavenegar
             var path = GetApiPath("account", "info", "json");
             var responseBody = await ExecuteAsync(path, null, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnAccountInfo>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
         public async Task<AccountConfigResult> AccountConfigAsync(string apilogs, string dailyreport, string debugmode, string defaultsender, int? mincreditalarm, string resendfailed, CancellationToken cancellationToken = default)
         {
@@ -459,7 +459,7 @@ namespace Kavenegar
         };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnAccountConfig>(responseBody, jsonOptions);
-            return l.entries;
+            return l.Entries;
         }
 
         #endregion
@@ -506,7 +506,7 @@ namespace Kavenegar
         };
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
             var l = System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions);
-            return l.entries[0];
+            return l.Entries[0];
         }
 
         #endregion
@@ -535,7 +535,7 @@ namespace Kavenegar
                 param.Add("localid", string.Join(",", localid.ToArray()));
             var responseBody = await ExecuteAsync(path, param, cancellationToken);
 
-            return System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions).entries;
+            return System.Text.Json.JsonSerializer.Deserialize<ReturnSend>(responseBody, jsonOptions).Entries;
         }
 
         #endregion << CallMakeTTS >>

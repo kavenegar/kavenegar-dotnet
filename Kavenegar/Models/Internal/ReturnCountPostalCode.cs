@@ -4,7 +4,7 @@ namespace Kavenegar.Models.Internal
 {
     internal class ReturnCountPostalCode
     {
-        public Result result { get; set; }
-        public List<CountPostalCodeResult> entries { get; set; }
+        public Result Return { get; set; }
+        public List<CountPostalCodeResult> Entries { get; set; }
     }
 }

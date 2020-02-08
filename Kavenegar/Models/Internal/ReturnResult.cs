@@ -2,7 +2,7 @@
 {
     internal class ReturnResult
     {
-        public Result @Return { get; set; }
-        public object entries { get; set; }
+        public Result Return { get; set; }
+        public object Entries { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace Kavenegar.Models.Internal
 {
     internal class ReturnStatus
     {
-        public Result result { get; set; }
-        public List<StatusResult> entries { get; set; }
+        public Result Return { get; set; }
+        public List<StatusResult> Entries { get; set; }
     }
 }

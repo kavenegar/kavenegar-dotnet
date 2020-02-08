@@ -2,7 +2,7 @@
 {
     internal class ReturnAccountInfo
     {
-        public Result result { get; set; }
-        public AccountInfoResult entries { get; set; }
+        public Result Return { get; set; }
+        public AccountInfoResult Entries { get; set; }
     }
 }

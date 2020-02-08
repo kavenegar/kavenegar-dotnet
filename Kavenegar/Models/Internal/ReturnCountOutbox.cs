@@ -4,7 +4,7 @@ namespace Kavenegar.Models.Internal
 {
     internal class ReturnCountOutbox
     {
-        public Result result { get; set; }
-        public List<CountOutboxResult> entries { get; set; }
+        public Result Return { get; set; }
+        public List<CountOutboxResult> Entries { get; set; }
     }
 }

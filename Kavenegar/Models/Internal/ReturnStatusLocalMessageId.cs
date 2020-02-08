@@ -4,7 +4,7 @@ namespace Kavenegar.Models.Internal
 {
     internal class ReturnStatusLocalMessageId
     {
-        public Result result { get; set; }
-        public List<StatusLocalMessageIdResult> entries { get; set; }
+        public Result Result { get; set; }
+        public List<StatusLocalMessageIdResult> Entries { get; set; }
     }
 }
