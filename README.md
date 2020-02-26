@@ -1,4 +1,4 @@
-# Dotnet SDK - Compatible with .NET Core and Full .NET Framework
+# KavenegarPlus - Compatible with .NET Standard
 
 # <a href="http://kavenegar.com/rest.html">Kavenegar RESTful API Document</a>
 If you need information about API document Please visit RESTful Document at <a href="https://kavenegar.com/">Kavenegar</a>
@@ -10,7 +10,16 @@ First of all, You need to make an account on Kavenegar from <a href="https://pan
 <p>
 After that you just need to pick API-KEY up from <a href="http://panel.kavenegar.com/Client/setting/index">My Account</a> section.
 
-You can download the C# SDK <a href="https://raw.githubusercontent.com/KaveNegar/kavenegar-csharp/master/Kavenegar/bin/Debug/Kavenegar.dll">Here</a> or just pull it.
+## Installation
+
+With dotnet cli
+
+    dotnet add package KavenegarPlus
+----
+Or with nuget package manager console
+    
+    Install-Package KavenegarPlus
+
 
 We also accept <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  Requests</a> .
 </p>
