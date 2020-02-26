@@ -9,6 +9,9 @@
     <Company>Hesam Kashefi</Company>
     <Description>kavenegarPlus is one of best libraries for calling Kavenegar APIs built for performance, testability and reliability.
 kavenegarPlus supports netstandard2.0 (compatible with .NET Core and .NET Framework)</Description>
+    <RepositoryUrl>https://github.com/HesamKashefi/kavenegar-dotnet.git</RepositoryUrl>
+    <PackageTags>Kavenegar, KavenegarApi, csharp, dotnet, aspnetcore</PackageTags>
+    <PackageProjectUrl>https://github.com/HesamKashefi/kavenegar-dotnet.git</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
