@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 using Kavenegar.Exceptions;
@@ -85,7 +85,6 @@ namespace Kavenegar
         private int _returnCode = 200;
         private string _returnMessage = "";
         private const string Apipath = "https://api.kavenegar.com/v1/{0}/{1}/{2}.{3}";
-        private static readonly JavaScriptSerializer JsonSerialiser = new JavaScriptSerializer();
         public KavenegarApi(string apikey)
         {
             _apikey = apikey;
@@ -150,7 +149,7 @@ namespace Kavenegar
                         responseBody = reader.ReadToEnd();
                     }
                 }
-                JsonSerialiser.Deserialize<ReturnResult>(responseBody);
+                JsonConvert.DeserializeObject<ReturnResult>(responseBody);
                 return responseBody;
             }
             catch (WebException webException)
@@ -162,7 +161,7 @@ namespace Kavenegar
                 }
                 try
                 {
-                    var result = JsonSerialiser.Deserialize<ReturnResult>(responseBody);
+                    var result = JsonConvert.DeserializeObject<ReturnResult>(responseBody);
                     throw new ApiException(result.Return.message, result.Return.status);
                 }
                 catch (ApiException)
@@ -228,8 +227,7 @@ namespace Kavenegar
                 param.Add("localid", StringHelper.Join(",", localids.ToArray()));
             }
             var responseBody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responseBody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responseBody);
             return l.entries;
         }
 
@@ -302,11 +300,10 @@ namespace Kavenegar
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages, List<MessageType> types, DateTime date, List<string> localmessageids)
         {
             String path = GetApiPath("sms", "sendarray", "json");
-            var jsonSerialiser = new JavaScriptSerializer();
-            var jsonSenders = jsonSerialiser.Serialize(senders);
-            var jsonReceptors = jsonSerialiser.Serialize(receptors);
-            var jsonMessages = jsonSerialiser.Serialize(messages);
-            var jsonTypes = jsonSerialiser.Serialize(types);
+            var jsonSenders = JsonConvert.SerializeObject(senders);
+            var jsonReceptors = JsonConvert.SerializeObject(receptors);
+            var jsonMessages = JsonConvert.SerializeObject(messages);
+            var jsonTypes = JsonConvert.SerializeObject(types);
             var param = new Dictionary<string, object>
         {
             {"message", jsonMessages},
@@ -321,7 +318,7 @@ namespace Kavenegar
             }
 
             var responsebody = Execute(path, param);
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
             if (l.entries == null)
             {
                 return new List<SendResult>();
@@ -337,8 +334,7 @@ namespace Kavenegar
             {"messageid", StringHelper.Join(",", messageids.ToArray())}
         };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnStatus>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnStatus>(responsebody);
             if (l.entries == null)
             {
                 return new List<StatusResult>();
@@ -358,8 +354,7 @@ namespace Kavenegar
             string path = GetApiPath("sms", "statuslocalmessageid", "json");
             var param = new Dictionary<string, object> { { "localid", StringHelper.Join(",", messageids.ToArray()) } };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnStatusLocalMessageId>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnStatusLocalMessageId>(responsebody);
             return l.entries;
         }
 
@@ -374,8 +369,7 @@ namespace Kavenegar
             var path = GetApiPath("sms", "select", "json");
             var param = new Dictionary<string, object> { { "messageid", StringHelper.Join(",", messageids.ToArray()) } };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
             if (l.entries == null)
             {
                 return new List<SendResult>();
@@ -410,8 +404,7 @@ namespace Kavenegar
              {"sender", sender}
          };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
             return l.entries;
         }
 
@@ -425,8 +418,7 @@ namespace Kavenegar
             var path = GetApiPath("sms", "latestoutbox", "json");
             var param = new Dictionary<string, object> { { "pagesize", pagesize }, { "sender", sender } };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
             return l.entries;
         }
 
@@ -450,8 +442,7 @@ namespace Kavenegar
              {"status", status}
          };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnCountOutbox>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnCountOutbox>(responsebody);
             if (l.entries == null || l.entries[0] == null)
             {
                 return new CountOutboxResult();
@@ -467,8 +458,7 @@ namespace Kavenegar
             {"messageid", StringHelper.Join(",", ids.ToArray())}
         };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnStatus>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnStatus>(responsebody);
             return l.entries;
         }
 
@@ -484,8 +474,7 @@ namespace Kavenegar
             String path = GetApiPath("sms", "receive", "json");
             var param = new Dictionary<string, object> { { "linenumber", line }, { "isread", isread } };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnReceive>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnReceive>(responsebody);
             if (l.entries == null)
             {
                 return new List<ReceiveResult>();
@@ -514,8 +503,7 @@ namespace Kavenegar
             {"isread", isread}
         };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnCountInbox>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnCountInbox>(responsebody);
             return l.entries[0];
         }
 
@@ -524,8 +512,7 @@ namespace Kavenegar
             String path = GetApiPath("sms", "countpostalcode", "json");
             var param = new Dictionary<string, object> { { "postalcode", postalcode } };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnCountPostalCode>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnCountPostalCode>(responsebody);
             return l.entries;
         }
 
@@ -549,8 +536,7 @@ namespace Kavenegar
             {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
         };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
             return l.entries;
         }
 
@@ -558,8 +544,7 @@ namespace Kavenegar
         {
             var path = GetApiPath("account", "info", "json");
             var responsebody = Execute(path, null);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnAccountInfo>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnAccountInfo>(responsebody);
             return l.entries;
         }
 
@@ -576,8 +561,7 @@ namespace Kavenegar
             {"resendfailed", resendfailed}
         };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnAccountConfig>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnAccountConfig>(responsebody);
             return l.entries;
         }
 
@@ -622,12 +606,11 @@ namespace Kavenegar
             {"type", type},
         };
             var responsebody = Execute(path, param);
-            var jsonSerialiser = new JavaScriptSerializer();
-            var l = jsonSerialiser.Deserialize<ReturnSend>(responsebody);
+            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
             return l.entries[0];
         }
-        
-        
+
+
         #region << CallMakeTTS >>
 
         public SendResult CallMakeTTS(string message, string receptor)
@@ -653,7 +636,7 @@ namespace Kavenegar
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
             var responseBody = Execute(path, param);
 
-            return JsonSerialiser.Deserialize<ReturnSend>(responseBody).entries;
+            return JsonConvert.DeserializeObject<ReturnSend>(responseBody).entries;
         }
 
         #endregion << CallMakeTTS >>
