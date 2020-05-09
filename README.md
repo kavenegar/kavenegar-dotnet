@@ -9,9 +9,22 @@ First of all, You need to make an account on Kavenegar from <a href="https://pan
 </p>
 <p>
 After that you just need to pick API-KEY up from <a href="http://panel.kavenegar.com/Client/setting/index">My Account</a> section.
-You can download the C# SDK <a href="https://raw.githubusercontent.com/KaveNegar/kavenegar-csharp/master/Kavenegar/bin/Debug/Kavenegar.dll">Here</a> or just pull it.
-Anyway there is good tutorial about <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  request</a>
+You can download the C# SDK <a href="https://github.com/kavenegar/kavenegar-dotnet">Here</a> or just pull it and use this in your projects.
+	Anyway there is good tutorial about <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  request</a>
 </p>
+	
+Also you can get pakage from nuget :
+
+##### Package Manager
+```
+Install-Package kavenegar -Version 1.2.4
+```
+##### .NET CLI
+```
+dotnet add package kavenegar --version 1.2.4
+```
+
+
 
 ## Usage
 Well, There is an example to Send SMS by C#.
@@ -69,7 +82,6 @@ Bug fixes, docs, and enhancements welcome! Please let us know <a href="mailto:su
  اگر در استفاده از کیت های سرویس کاوه نگار مشکلی یا پیشنهادی  داشتید ما را با یک Pull Request  یا  ارسال ایمیل به support@kavenegar.com  خوشحال کنید.
  
 ##
-![http://kavenegar.com](http://kavenegar.com/public/images/logo.png)		
 
 [http://kavenegar.com](http://kavenegar.com)	
 
