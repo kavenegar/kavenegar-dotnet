@@ -665,9 +665,9 @@ namespace Kavenegar
 
 #if NETSTANDARD2_0
 
-        public SendResult SendAsync(string sender, string receptor, string message)
+        public Task<SendResult> SendAsync(string sender, string receptor, string message)
         {
-            return Send(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue);
+            return SendAsync(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue);
         }
 
         public async Task<SendResult> SendAsync(string sender, string receptor, string message, MessageType type, DateTime date)
