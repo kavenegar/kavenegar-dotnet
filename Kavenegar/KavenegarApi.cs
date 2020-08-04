@@ -118,7 +118,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object>
         {
             {"sender", System.Web.HttpUtility.UrlEncode(sender)},
-            {"receptor", System.Web.HttpUtility.UrlEncode(string.Join(",", receptor.ToArray()))},
+            {"receptor", string.Join(",", receptor.ToArray())},
             {"message", System.Web.HttpUtility.UrlEncode(message)},
             {"type", (int) type},
             {"date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date)}
