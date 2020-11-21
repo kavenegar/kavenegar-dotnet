@@ -13,11 +13,11 @@ After that you just need to pick API-KEY up from <a href="http://panel.kavenegar
 
 install sdk With dotnet cli
 
-    dotnet add package KavenegarPlus
+    dotnet add package Kavenegar
 ----
 Or with nuget package manager console
     
-    Install-Package KavenegarPlus
+    Install-Package Kavenegar
 
 
 We also accept <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  Requests</a> .
