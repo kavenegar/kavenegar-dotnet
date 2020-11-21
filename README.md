@@ -10,9 +10,8 @@ First of all, You need to make an account on Kavenegar from <a href="https://pan
 <p>
 After that you just need to pick API-KEY up from <a href="http://panel.kavenegar.com/Client/setting/index">My Account</a> section.
 
-## Installation
 
-With dotnet cli
+install sdk With dotnet cli
 
     dotnet add package KavenegarPlus
 ----
@@ -22,7 +21,12 @@ Or with nuget package manager console
 
 
 We also accept <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  Requests</a> .
+=======
+You can download the C# SDK <a href="https://github.com/kavenegar/kavenegar-dotnet">Here</a> or just pull it and use this in your projects.
+	Anyway there is good tutorial about <a href="http://gun.io/blog/how-to-github-fork-branch-and-pull-request/">Pull  request</a>
+
 </p>
+	
 
 ## Usage For ASP.NET Core
 
@@ -155,7 +159,6 @@ Bug fixes, docs, and enhancements are welcome! Please let us know <a href="mailt
  اگر در استفاده از کیت های سرویس کاوه نگار مشکلی یا پیشنهادی  داشتید ما را با یک Pull Request  یا  ارسال ایمیل به support@kavenegar.com  خوشحال کنید.
  
 ##
-![http://kavenegar.com](http://kavenegar.com/public/images/logo.png)		
 
 [http://kavenegar.com](http://kavenegar.com)	
 

@@ -1,17 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>kavenegarPlus</PackageId>
-    <Authors>Hesam Kashefi, Kavenegar</Authors>
-    <Product>kavenegarPlus</Product>
-    <Company>Hesam Kashefi</Company>
-    <Description>kavenegarPlus is one of best libraries for calling Kavenegar APIs built for performance, testability and reliability.
-kavenegarPlus supports netstandard2.0 (compatible with .NET Core and .NET Framework)</Description>
-    <RepositoryUrl>https://github.com/HesamKashefi/kavenegar-dotnet.git</RepositoryUrl>
+    <PackageId>kavenegar</PackageId>
+    <Authors>Kavenegar Team, Bagher Sohrabi, Hesam Kashefi, Ardavan</Authors>
+    <Product>kavenegar</Product>
+    <Company>kavenegar.com</Company>
+    <Description>kavenegar is one of best libraries for calling Kavenegar APIs built for performance, testability and reliability.
+kavenegar supports netstandard2.0 (compatible with .NET Core and .NET Framework)</Description>
+    <RepositoryUrl>https://github.com/Kavenegar/kavenegar-dotnet.git</RepositoryUrl>
     <PackageTags>Kavenegar, KavenegarApi, csharp, dotnet, aspnetcore</PackageTags>
-    <PackageProjectUrl>https://github.com/HesamKashefi/kavenegar-dotnet.git</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Kavenegar/kavenegar-dotnet.git</PackageProjectUrl>
     <Version>1.0.1</Version>
   </PropertyGroup>
 
