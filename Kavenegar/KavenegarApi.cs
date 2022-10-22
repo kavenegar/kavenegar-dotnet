@@ -79,7 +79,7 @@ namespace Kavenegar
         public AccountConfigResult entries { get; set; }
     }
 
-    public class KavenegarApi
+    public class KavenegarApi : IKavenegarApi
     {
         private string _apikey;
         private int _returnCode = 200;
