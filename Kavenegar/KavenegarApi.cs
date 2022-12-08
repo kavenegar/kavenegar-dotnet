@@ -12,71 +12,81 @@ using Kavenegar.Utils;
 
 namespace Kavenegar
 {
+    [Serializable]
     internal class ReturnResult
     {
         public Result @Return { get; set; }
-        public object entries { get; set; }
+        [JsonProperty("entries")] public object Entries { get; set; }
     }
 
+    [Serializable]
     internal class Result
     {
-        public int status { get; set; }
-        public string message { get; set; }
+        [JsonProperty("status")] public int Status { get; set; }
+        [JsonProperty("message")] public string Message { get; set; }
     }
 
+    [Serializable]
     internal class ReturnSend
     {
         public Result @Return { get; set; }
-        public List<SendResult> entries { get; set; }
+        [JsonProperty("entries")] public List<SendResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnStatus
     {
-        public Result result { get; set; }
-        public List<StatusResult> entries { get; set; }
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public List<StatusResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnStatusLocalMessageId
     {
-        public Result result { get; set; }
-        public List<StatusLocalMessageIdResult> entries { get; set; }
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public List<StatusLocalMessageIdResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnReceive
     {
-        public Result result { get; set; }
-        public List<ReceiveResult> entries { get; set; }
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public List<ReceiveResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnCountOutbox
     {
-        public Result result { get; set; }
-        public List<CountOutboxResult> entries { get; set; }
+        [JsonProperty("Result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public List<CountOutboxResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnCountInbox
     {
-        public Result result { get; set; }
-        public List<CountInboxResult> entries { get; set; }
-
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public List<CountInboxResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnCountPostalCode
     {
-        public Result result { get; set; }
-        public List<CountPostalCodeResult> entries { get; set; }
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public List<CountPostalCodeResult> Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnAccountInfo
     {
-        public Result result { get; set; }
-        public AccountInfoResult entries { get; set; }
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public AccountInfoResult Entries { get; set; }
     }
 
+    [Serializable]
     internal class ReturnAccountConfig
     {
-        public Result result { get; set; }
-        public AccountConfigResult entries { get; set; }
+        [JsonProperty("result")] public Result Result { get; set; }
+        [JsonProperty("entries")] public AccountConfigResult Entries { get; set; }
     }
 
     public class KavenegarApi : IKavenegarApi
@@ -85,6 +95,7 @@ namespace Kavenegar
         private int _returnCode = 200;
         private string _returnMessage = "";
         private const string Apipath = "https://api.kavenegar.com/v1/{0}/{1}/{2}.{3}";
+
         public KavenegarApi(string apikey)
         {
             _apikey = apikey;
@@ -162,7 +173,7 @@ namespace Kavenegar
                 try
                 {
                     var result = JsonConvert.DeserializeObject<ReturnResult>(responseBody);
-                    throw new ApiException(result.Return.message, result.Return.status);
+                    throw new ApiException(result.Return.Message, result.Return.Status);
                 }
                 catch (ApiException)
                 {
@@ -228,7 +239,7 @@ namespace Kavenegar
             }
             var responseBody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responseBody);
-            return l.entries;
+            return l.Entries;
         }
 
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages)
@@ -319,11 +330,11 @@ namespace Kavenegar
 
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<SendResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         public List<StatusResult> Status(List<string> messageids)
@@ -335,11 +346,11 @@ namespace Kavenegar
         };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnStatus>(responsebody);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<StatusResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         public StatusResult Status(string messageid)
@@ -355,7 +366,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "localid", StringHelper.Join(",", messageids.ToArray()) } };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnStatusLocalMessageId>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public StatusLocalMessageIdResult StatusLocalMessageId(string messageid)
@@ -370,11 +381,11 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "messageid", StringHelper.Join(",", messageids.ToArray()) } };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<SendResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         public SendResult Select(string messageid)
@@ -405,7 +416,7 @@ namespace Kavenegar
          };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public List<SendResult> LatestOutbox(long pagesize)
@@ -419,7 +430,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "pagesize", pagesize }, { "sender", sender } };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public CountOutboxResult CountOutbox(DateTime startdate)
@@ -443,11 +454,11 @@ namespace Kavenegar
          };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnCountOutbox>(responsebody);
-            if (l.entries == null || l.entries[0] == null)
+            if (l.Entries == null || l.Entries[0] == null)
             {
                 return new CountOutboxResult();
             }
-            return l.entries[0];
+            return l.Entries[0];
         }
 
         public List<StatusResult> Cancel(List<String> ids)
@@ -459,7 +470,7 @@ namespace Kavenegar
         };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnStatus>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public StatusResult Cancel(String messageid)
@@ -475,11 +486,11 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "linenumber", line }, { "isread", isread } };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnReceive>(responsebody);
-            if (l.entries == null)
+            if (l.Entries == null)
             {
                 return new List<ReceiveResult>();
             }
-            return l.entries;
+            return l.Entries;
         }
 
         public CountInboxResult CountInbox(DateTime startdate, string linenumber)
@@ -504,7 +515,7 @@ namespace Kavenegar
         };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnCountInbox>(responsebody);
-            return l.entries[0];
+            return l.Entries[0];
         }
 
         public List<CountPostalCodeResult> CountPostalCode(long postalcode)
@@ -513,7 +524,7 @@ namespace Kavenegar
             var param = new Dictionary<string, object> { { "postalcode", postalcode } };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnCountPostalCode>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public List<SendResult> SendByPostalCode(long postalcode, String sender, String message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount)
@@ -537,7 +548,7 @@ namespace Kavenegar
         };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public AccountInfoResult AccountInfo()
@@ -545,7 +556,7 @@ namespace Kavenegar
             var path = GetApiPath("account", "info", "json");
             var responsebody = Execute(path, null);
             var l = JsonConvert.DeserializeObject<ReturnAccountInfo>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public AccountConfigResult AccountConfig(string apilogs, string dailyreport, string debugmode, string defaultsender, int? mincreditalarm, string resendfailed)
@@ -562,7 +573,7 @@ namespace Kavenegar
         };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnAccountConfig>(responsebody);
-            return l.entries;
+            return l.Entries;
         }
 
         public SendResult VerifyLookup(string receptor, string token, string template)
@@ -607,7 +618,7 @@ namespace Kavenegar
         };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            return l.entries[0];
+            return l.Entries[0];
         }
 
 
@@ -636,7 +647,7 @@ namespace Kavenegar
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
             var responseBody = Execute(path, param);
 
-            return JsonConvert.DeserializeObject<ReturnSend>(responseBody).entries;
+            return JsonConvert.DeserializeObject<ReturnSend>(responseBody).Entries;
         }
 
         #endregion << CallMakeTTS >>
