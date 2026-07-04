@@ -32,21 +32,19 @@ Well, There is an example to Send SMS by C#.
 ```c#
 try
 {
-	Kavenegar.KavenegarApi api = new Kavenegar.KavenegarApi("Your Api Key");
-	var result = api.Send("SenderLine", "Your Receptor", "خدمات پیام کوتاه کاوه نگار");
-	foreach (var r in result){
-	  Console.Write("r.Messageid.ToString()");
-  }
+    Kavenegar.KavenegarApi api = new Kavenegar.KavenegarApi("Your Api Key");
+    var result = api.Send("SenderLine", "Your Receptor", "خدمات پیام کوتاه کاوه نگار");
+    Console.WriteLine(result.Messageid);
 }
-catch (Kavenegar.Exceptions.ApiException ex) 
+catch (Kavenegar.Exceptions.ApiException ex)
 {
-	// در صورتی که خروجی وب سرویس 200 نباشد این خطارخ می دهد.
-	Console.Write("Message : " + ex.Message);
+    // در صورتی که خروجی وب سرویس 200 نباشد این خطارخ می دهد.
+    Console.WriteLine("Message : " + ex.Message);
 }
-catch (Kavenegar.Exceptions.HttpException ex) 
+catch (Kavenegar.Exceptions.HttpException ex)
 {
-	// در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
-	Console.Write("Message : " + ex.Message);
+    // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
+    Console.WriteLine("Message : " + ex.Message);
 }
 ```
 
