@@ -199,7 +199,12 @@ namespace Kavenegar
         public SendResult Send(string sender, string receptor, string message, MessageType type, DateTime date, string localid, string policy)
         {
             var receptors = new List<String> { receptor };
-            var localids = new List<String> { localid };
+            List<String> localids = null;
+            if (!string.IsNullOrEmpty(localid))
+            {
+                localids = new List<String> { localid };
+            }
+
             return Send(sender, receptors, message, type, date, localids, policy)[0];
         }
         public SendResult Send(string sender, string receptor, string message, string localid)
@@ -216,11 +221,16 @@ namespace Kavenegar
         }
         public List<SendResult> Send(string sender, List<string> receptors, string message, string localid, string policy)
         {
-            List<String> localids = new List<String>();
-            for (var i = 0; i <= receptors.Count - 1; i++)
+            List<String> localids = null;
+            if (!string.IsNullOrEmpty(localid))
             {
-                localids.Add(localid);
+                localids = new List<String>();
+                for (var i = 0; i <= receptors.Count - 1; i++)
+                {
+                    localids.Add(localid);
+                }
             }
+
             return Send(sender, receptors, message, MessageType.MobileMemory, DateTime.MinValue, localids, policy);
         }
         public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids)
@@ -278,7 +288,7 @@ namespace Kavenegar
             return SendArray(sender, receptors, messages, type, date, localmessageids, null);
         }
 
-        public List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages, MessageType type, DateTime date, string localmessageids, string policy)
+        public List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages, MessageType type, DateTime date, string localmessageid, string policy)
         {
             var senders = new List<String>();
             for (var i = 0; i < receptors.Count; i++)
@@ -290,7 +300,16 @@ namespace Kavenegar
             {
                 types.Add(MessageType.MobileMemory);
             }
-            return SendArray(senders, receptors, messages, types, date, new List<String>() { localmessageids }, policy);
+            List<String> localmessageids = null;
+            if (!string.IsNullOrEmpty(localmessageid))
+            {
+                localmessageids = new List<String>();
+                for (var i = 0; i <= receptors.Count - 1; i++)
+                {
+                    localmessageids.Add(localmessageid);
+                }
+            }
+            return SendArray(senders, receptors, messages, types, date, localmessageids, policy);
         }
 
         public List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages, string localmessageid)
@@ -321,10 +340,14 @@ namespace Kavenegar
             {
                 types.Add(MessageType.MobileMemory);
             }
-            var localmessageids = new List<string>();
-            for (var i = 0; i <= receptors.Count - 1; i++)
+            List<String> localmessageids = null;
+            if (!string.IsNullOrEmpty(localmessageid))
             {
-                localmessageids.Add(localmessageid);
+                localmessageids = new List<string>();
+                for (var i = 0; i <= receptors.Count - 1; i++)
+                {
+                    localmessageids.Add(localmessageid);
+                }
             }
             return SendArray(senders, receptors, messages, types, DateTime.MinValue, localmessageids, policy);
         }
