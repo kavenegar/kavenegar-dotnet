@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0;net8.0;net35</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0;net10.0;net35</TargetFrameworks>
     <Title>Kavenegar</Title>
     <PackageId>Kavenegar</PackageId>
     <OutputType>Library</OutputType>
@@ -13,10 +13,6 @@
     <RepositoryUrl>https://github.com/kavenegar/kavenegar-dotnet</RepositoryUrl>
     <Version>1.1.5-alpha.1</Version>
     <PackageReleaseNotes>Force SSL</PackageReleaseNotes>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(NETCoreSdkVersion)' != '' And $(NETCoreSdkVersion.StartsWith('10.')) ">
-    <TargetFrameworks>netstandard2.0;net6.0;net8.0;net10.0;net35</TargetFrameworks>
   </PropertyGroup>
 
   <!-- Conditionally obtain references for .NET Framework targets -->
