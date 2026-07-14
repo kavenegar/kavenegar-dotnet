@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Kavenegar.Models;
 using Kavenegar.Models.Enums;
 
@@ -6,8 +6,8 @@ namespace Kavenegar.Test
 {
     public class VerifyTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
-        private const string RealReceptor = "09912064992";
+        private const string RealApiKey = "<put your apikey here>";
+        private const string RealReceptor = "<put your receptor here>";
 
         // API Tested: POST /v1/{api-key}/verify/lookup.json
         [Theory]
@@ -89,7 +89,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/verify/lookup.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor, "123456", "otp-template", "test")]
-        public void Test_VerifyLookup_Extended_Real(string apiKey, string receptor, string token, string template, string tag)
+        public void Test_VerifyLookup_Extended(string apiKey, string receptor, string token, string template, string tag)
         {
             var api = new KavenegarApi(apiKey);
             var result = api.VerifyLookup(receptor, token, null, null, null, null, template, VerifyLookupType.Sms, tag: tag);
@@ -98,7 +98,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, "123456", "otp-template", "test")]
-        public async System.Threading.Tasks.Task Test_VerifyLookup_Extended_Real_Async(string apiKey, string receptor, string token, string template, string tag)
+        public async System.Threading.Tasks.Task Test_VerifyLookup_Extended_Async(string apiKey, string receptor, string token, string template, string tag)
         {
             var api = new KavenegarApi(apiKey);
             var result = await api.VerifyLookupAsync(receptor, token, null, null, null, null, template, VerifyLookupType.Sms, tag: tag);
@@ -110,7 +110,7 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/verify/list.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_ListTemplates_Real(string apiKey)
+        public void Test_ListTemplates(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var templates = api.ListTemplates();
@@ -119,7 +119,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_ListTemplates_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_ListTemplates_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var templates = await api.ListTemplatesAsync();
@@ -131,7 +131,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/verify/addtemplate.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_AddTemplate_Real(string apiKey)
+        public void Test_AddTemplate(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = CreateTempTemplate(api);
@@ -143,7 +143,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_AddTemplate_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_AddTemplate_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = await CreateTempTemplateAsync(api);
@@ -158,7 +158,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/verify/updatetemplate.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_UpdateTemplate_Real(string apiKey)
+        public void Test_UpdateTemplate(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = CreateTempTemplate(api);
@@ -179,7 +179,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_UpdateTemplate_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_UpdateTemplate_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = await CreateTempTemplateAsync(api);
@@ -203,7 +203,7 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/verify/get.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_GetTemplate_Real(string apiKey)
+        public void Test_GetTemplate(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = CreateTempTemplate(api);
@@ -217,7 +217,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_GetTemplate_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_GetTemplate_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = await CreateTempTemplateAsync(api);
@@ -234,7 +234,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/verify/clone.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_CloneTemplate_Real(string apiKey)
+        public void Test_CloneTemplate(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = CreateTempTemplate(api);
@@ -249,7 +249,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_CloneTemplate_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_CloneTemplate_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = await CreateTempTemplateAsync(api);
@@ -267,7 +267,7 @@ namespace Kavenegar.Test
         // API Tested: DELETE /v1/{api-key}/verify/deletetemplate.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_DeleteTemplate_Real(string apiKey)
+        public void Test_DeleteTemplate(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = CreateTempTemplate(api);
@@ -278,7 +278,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_DeleteTemplate_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_DeleteTemplate_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var added = await CreateTempTemplateAsync(api);

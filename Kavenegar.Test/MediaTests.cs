@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 namespace Kavenegar.Test
 {
     public class MediaTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
+        private const string RealApiKey = "<put your apikey here>";
 
         //new
         // API Tested: GET /v1/{api-key}/media/list.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_ListMedia_Real(string apiKey)
+        public void Test_ListMedia(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var list = api.ListMedia(1, 10);
@@ -19,7 +19,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_ListMedia_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_ListMedia_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var list = await api.ListMediaAsync(1, 10);
@@ -32,7 +32,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/media/upload.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_UploadMedia_Real(string apiKey)
+        public void Test_UploadMedia(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             byte[] fileBytes;
@@ -49,7 +49,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_UploadMedia_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_UploadMedia_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             byte[] fileBytes;
@@ -69,7 +69,7 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/media/get.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_GetMedia_Real(string apiKey)
+        public void Test_GetMedia(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             byte[] fileBytes;
@@ -88,7 +88,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_GetMedia_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_GetMedia_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             byte[] fileBytes;
@@ -110,7 +110,7 @@ namespace Kavenegar.Test
         // API Tested: DELETE /v1/{api-key}/media/delete.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_DeleteMedia_Real(string apiKey)
+        public void Test_DeleteMedia(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             byte[] fileBytes;
@@ -126,7 +126,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_DeleteMedia_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_DeleteMedia_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             byte[] fileBytes;

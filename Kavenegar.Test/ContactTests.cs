@@ -1,16 +1,16 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 namespace Kavenegar.Test
 {
     public class ContactTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
-        private const string RealReceptor = "09912064992";
+        private const string RealApiKey = "<put your apikey here>";
+        private const string RealReceptor = "<put your receptor here>";
 
         //new
         // API Tested: GET /v1/{api-key}/group/listgroups.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_ListGroups_Real(string apiKey)
+        public void Test_ListGroups(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var groups = api.ListGroups();
@@ -19,7 +19,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_ListGroups_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_ListGroups_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var groups = await api.ListGroupsAsync();
@@ -31,7 +31,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/group/addgroup.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_AddGroup_Real(string apiKey)
+        public void Test_AddGroup(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var newGroups = api.AddGroup("AddGroupTest1", "SaaS");
@@ -45,7 +45,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_AddGroup_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_AddGroup_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var newGroups = await api.AddGroupAsync("AddGroupTest1", "SaaS");
@@ -62,7 +62,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/group/editgroup.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_EditGroup_Real(string apiKey)
+        public void Test_EditGroup(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("EditGroupTest", "SaaS-Edit")[0];
@@ -76,7 +76,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_EditGroup_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_EditGroup_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("EditGroupTest", "SaaS-Edit"))[0];
@@ -93,7 +93,7 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/group/searchgroups.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_SearchGroups_Real(string apiKey)
+        public void Test_SearchGroups(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("SearchGroupTest", "SaaS-Search")[0];
@@ -107,7 +107,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_SearchGroups_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_SearchGroups_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("SearchGroupTest", "SaaS-Search"))[0];
@@ -124,7 +124,7 @@ namespace Kavenegar.Test
         // API Tested: DELETE /v1/{api-key}/group/removegroup.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_RemoveGroup_Real(string apiKey)
+        public void Test_RemoveGroup(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("RemoveGroupTest", "SaaS-Remove")[0];
@@ -135,7 +135,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_RemoveGroup_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_RemoveGroup_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("RemoveGroupTest", "SaaS-Remove"))[0];
@@ -149,7 +149,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/contact/add.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_AddContact_Real(string apiKey, string receptor)
+        public void Test_AddContact(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("AddContactTest", "SaaS-Contact")[0];
@@ -163,7 +163,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_AddContact_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_AddContact_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("AddContactTest", "SaaS-Contact"))[0];
@@ -180,7 +180,7 @@ namespace Kavenegar.Test
         // API Tested: DELETE /v1/{api-key}/contact/remove.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_RemoveContact_Real(string apiKey, string receptor)
+        public void Test_RemoveContact(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("RemoveContactTest", "SaaS-RemoveContact")[0];
@@ -195,7 +195,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_RemoveContact_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_RemoveContact_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("RemoveContactTest", "SaaS-RemoveContact"))[0];

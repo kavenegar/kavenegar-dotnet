@@ -1,18 +1,18 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Kavenegar.Models;
 
 namespace Kavenegar.Test
 {
     public class SubClientTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
-        private const string RealReceptor = "09912064992";
+        private const string RealApiKey = "<put your apikey here>";
+        private const string RealReceptor = "<put your receptor here>";
 
         //new
         // API Tested: GET /v1/{api-key}/client/list.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_ListClients_Real(string apiKey)
+        public void Test_ListClients(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var list = api.ListClients();
@@ -21,7 +21,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_ListClients_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_ListClients_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             var list = await api.ListClientsAsync();
@@ -33,7 +33,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/client/add.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_AddClient_Real(string apiKey, string receptor)
+        public void Test_AddClient(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var clientName = "Add Test " + Guid.NewGuid().ToString().Substring(0, 8);
@@ -55,7 +55,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_AddClient_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_AddClient_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var clientName = "Add Test " + Guid.NewGuid().ToString().Substring(0, 8);
@@ -80,7 +80,7 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/client/fetch.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_FetchClient_Real(string apiKey, string receptor)
+        public void Test_FetchClient(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = CreateTempClient(api, receptor);
@@ -93,7 +93,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_FetchClient_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_FetchClient_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = await CreateTempClientAsync(api, receptor);
@@ -109,7 +109,7 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/client/fetchbylocalid.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_FetchClientByLocalId_Real(string apiKey, string receptor)
+        public void Test_FetchClientByLocalId(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = CreateTempClient(api, receptor);
@@ -122,7 +122,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_FetchClientByLocalId_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_FetchClientByLocalId_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = await CreateTempClientAsync(api, receptor);
@@ -138,7 +138,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/client/renewkey.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_RenewClientKey_Real(string apiKey, string receptor)
+        public void Test_RenewClientKey(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = CreateTempClient(api, receptor);
@@ -151,7 +151,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_RenewClientKey_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_RenewClientKey_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = await CreateTempClientAsync(api, receptor);
@@ -167,7 +167,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/client/update.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_UpdateClient_Real(string apiKey, string receptor)
+        public void Test_UpdateClient(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = CreateTempClient(api, receptor);
@@ -187,7 +187,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_UpdateClient_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_UpdateClient_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = await CreateTempClientAsync(api, receptor);
@@ -210,7 +210,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/client/chargecredit.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_ChargeClientCredit_Real(string apiKey, string receptor)
+        public void Test_ChargeClientCredit(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = CreateTempClient(api, receptor);
@@ -223,7 +223,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_ChargeClientCredit_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_ChargeClientCredit_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = await CreateTempClientAsync(api, receptor);
@@ -239,7 +239,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/client/setstatus.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public void Test_SetClientStatus_Real(string apiKey, string receptor)
+        public void Test_SetClientStatus(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = CreateTempClient(api, receptor);
@@ -249,7 +249,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor)]
-        public async System.Threading.Tasks.Task Test_SetClientStatus_Real_Async(string apiKey, string receptor)
+        public async System.Threading.Tasks.Task Test_SetClientStatus_Async(string apiKey, string receptor)
         {
             var api = new KavenegarApi(apiKey);
             var tempClient = await CreateTempClientAsync(api, receptor);

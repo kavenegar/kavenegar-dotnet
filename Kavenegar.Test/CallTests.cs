@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Kavenegar.Models.Enums;
 
 namespace Kavenegar.Test
 {
     public class CallTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
-        private const string RealReceptor = "09912064992";
-        private const string RealSender = "1000100055";
+        private const string RealApiKey = "<put your apikey here>";
+        private const string RealReceptor = "<put your receptor here>";
+        private const string RealSender = "<put your sender here>";
 
         // API Tested: POST /v1/{api-key}/call/maketts.json
         [Theory]
@@ -42,7 +42,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/call/maketts.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender, "Test TTS Call", "tts-tag")]
-        public void Test_CallMakeTTS_Extended_Real(string apiKey, string receptor, string sender, string message, string tag)
+        public void Test_CallMakeTTS_Extended(string apiKey, string receptor, string sender, string message, string tag)
         {
             var api = new KavenegarApi(apiKey);
             var receptors = new List<string> { receptor };
@@ -52,7 +52,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender, "Test TTS Call", "tts-tag")]
-        public async System.Threading.Tasks.Task Test_CallMakeTTS_Extended_Real_Async(string apiKey, string receptor, string sender, string message, string tag)
+        public async System.Threading.Tasks.Task Test_CallMakeTTS_Extended_Async(string apiKey, string receptor, string sender, string message, string tag)
         {
             var api = new KavenegarApi(apiKey);
             var receptors = new List<string> { receptor };

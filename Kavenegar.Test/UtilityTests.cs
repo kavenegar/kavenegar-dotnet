@@ -1,16 +1,16 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 namespace Kavenegar.Test
 {
     public class UtilityTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
+        private const string RealApiKey = "<put your apikey here>";
 
         // APIs Tested:
         // - GET /v1/{api-key}/utils/ping.json
         // - GET /v1/{api-key}/utils/getdate.json
         [Theory]
         [InlineData(RealApiKey)]
-        public void Test_Utils_Real(string apiKey)
+        public void Test_Utils(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             // Ping
@@ -25,7 +25,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey)]
-        public async System.Threading.Tasks.Task Test_Utils_Real_Async(string apiKey)
+        public async System.Threading.Tasks.Task Test_Utils_Async(string apiKey)
         {
             var api = new KavenegarApi(apiKey);
             // Ping
@@ -52,7 +52,7 @@ namespace Kavenegar.Test
             Assert.NotNull(accountInfo);
 
             // AccountConfig: AccountConfigResult AccountConfig(string apilogs, string dailyreport, string debugmode, string defaultsender, int? mincreditalarm, string resendfailed)
-            var accountConfig = api.AccountConfig("enabled", "enabled", "enabled", "1000100055", 10000, "enabled");
+            var accountConfig = api.AccountConfig("enabled", "enabled", "enabled", "<put your sender here>", 10000, "enabled");
             Assert.NotNull(accountConfig);
         }
 #if !NET35
@@ -66,7 +66,7 @@ namespace Kavenegar.Test
             Assert.NotNull(accountInfo);
 
             // AccountConfig: AccountConfigResult AccountConfig(string apilogs, string dailyreport, string debugmode, string defaultsender, int? mincreditalarm, string resendfailed)
-            var accountConfig = await api.AccountConfigAsync("enabled", "enabled", "enabled", "1000100055", 10000, "enabled");
+            var accountConfig = await api.AccountConfigAsync("enabled", "enabled", "enabled", "<put your sender here>", 10000, "enabled");
             Assert.NotNull(accountConfig);
         }
 #endif

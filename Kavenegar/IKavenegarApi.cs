@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Kavenegar.Models;
 using Kavenegar.Models.Enums;
@@ -436,49 +436,6 @@ namespace Kavenegar
 #endif
 
         /// <summary>
-        /// Retrieves active phone counts matching a postal code area.
-        /// </summary>
-        /// <param name="postalcode">The postal code prefix.</param>
-        /// <returns>A list of category count details.</returns>
-        List<CountPostalCodeResult> CountPostalCode(long postalcode);
-#if !NET35
-        System.Threading.Tasks.Task<List<CountPostalCodeResult>> CountPostalCodeAsync(long postalcode);
-#endif
-
-        /// <summary>
-        /// Dispatches a message to numbers registered within a specific postal code.
-        /// </summary>
-        /// <param name="postalcode">The postal code filter.</param>
-        /// <param name="sender">The sender line number.</param>
-        /// <param name="message">The text body of the message.</param>
-        /// <param name="mcistartIndex">The start index for MCI operators.</param>
-        /// <param name="mcicount">The dispatch count for MCI operators.</param>
-        /// <param name="mtnstartindex">The start index for MTN operators.</param>
-        /// <param name="mtncount">The dispatch count for MTN operators.</param>
-        /// <returns>A list of send result entries.</returns>
-        List<SendResult> SendByPostalCode(long postalcode, String sender, String message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount);
-#if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendByPostalCodeAsync(long postalcode, String sender, String message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount);
-#endif
-
-        /// <summary>
-        /// Dispatches a scheduled message to numbers registered within a specific postal code.
-        /// </summary>
-        /// <param name="postalcode">The postal code.</param>
-        /// <param name="sender">The sender line number.</param>
-        /// <param name="message">The text body.</param>
-        /// <param name="mcistartIndex">MCI start index.</param>
-        /// <param name="mcicount">MCI count.</param>
-        /// <param name="mtnstartindex">MTN start index.</param>
-        /// <param name="mtncount">MTN count.</param>
-        /// <param name="date">The scheduled dispatch time.</param>
-        /// <returns>A list of send result entries.</returns>
-        List<SendResult> SendByPostalCode(long postalcode, String sender, String message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount, DateTime date);
-#if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendByPostalCodeAsync(long postalcode, String sender, String message, long mcistartIndex, long mcicount, long mtnstartindex, long mtncount, DateTime date);
-#endif
-
-        /// <summary>
         /// Retrieves account profile details, balance limits, and status.
         /// </summary>
         /// <returns>Account information details.</returns>
@@ -712,18 +669,17 @@ namespace Kavenegar
 #endif
 
         /// <summary>
-        /// Retrieves inbox messages with filters, page numbers, and dates.
+        /// Retrieves paginated records of incoming messages in the account inbox.
         /// </summary>
-        /// <param name="lineNumber">Your line number.</param>
-        /// <param name="line">Inbox search query.</param>
+        /// <param name="lineNumber">Sender receiver line mapping identifier.</param>
         /// <param name="isRead">Read state filter.</param>
         /// <param name="startDate">Filter window start.</param>
         /// <param name="endDate">Filter window end.</param>
         /// <param name="pageNumber">Page offset.</param>
         /// <returns>A paged inbox result detail block.</returns>
-        InboxPagedResult InboxPaged(string lineNumber, string line, int? isRead = null, DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null);
+        InboxPagedResult InboxPaged(string lineNumber, int? isRead = null, DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null);
 #if !NET35
-        System.Threading.Tasks.Task<InboxPagedResult> InboxPagedAsync(string lineNumber, string line, int? isRead = null, DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null);
+        System.Threading.Tasks.Task<InboxPagedResult> InboxPagedAsync(string lineNumber, int? isRead = null, DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null);
 #endif
 
         /// <summary>
@@ -737,17 +693,6 @@ namespace Kavenegar
         System.Threading.Tasks.Task<List<GroupSendReportResult>> GroupSendReportAsync(DateTime startDate, DateTime endDate);
 #endif
 
-        /// <summary>
-        /// Retrieves paginated dispatch details for group broadcasts.
-        /// </summary>
-        /// <param name="partyId">Broadcast party group ID.</param>
-        /// <param name="cursor">Offset cursor ID.</param>
-        /// <param name="direction">Search paging direction.</param>
-        /// <returns>Group broadcast logs.</returns>
-        SelectGroupSendResult SelectGroupSend(int partyId, int cursor, int? direction = null);
-#if !NET35
-        System.Threading.Tasks.Task<SelectGroupSendResult> SelectGroupSendAsync(int partyId, int cursor, int? direction = null);
-#endif
 
         /// <summary>
         /// Generates and provisions a new sub-client profile.

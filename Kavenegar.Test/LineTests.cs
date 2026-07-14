@@ -1,17 +1,17 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 namespace Kavenegar.Test
 {
     public class LineTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
-        private const string RealReceptor = "09912064992";
-        private const string RealSender = "1000100055";
+        private const string RealApiKey = "<put your apikey here>";
+        private const string RealReceptor = "<put your receptor here>";
+        private const string RealSender = "<put your sender here>";
 
         //new
         // API Tested: GET /v1/{api-key}/line/blocked/exists.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender)]
-        public void Test_BlockedLineExists_Real(string apiKey, string receptor, string sender)
+        public void Test_BlockedLineExists(string apiKey, string receptor, string sender)
         {
             var api = new KavenegarApi(apiKey);
             var check = api.BlockedLineExists(sender, receptor);
@@ -20,7 +20,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender)]
-        public async System.Threading.Tasks.Task Test_BlockedLineExists_Real_Async(string apiKey, string receptor, string sender)
+        public async System.Threading.Tasks.Task Test_BlockedLineExists_Async(string apiKey, string receptor, string sender)
         {
             var api = new KavenegarApi(apiKey);
             var check = await api.BlockedLineExistsAsync(sender, receptor);
@@ -32,7 +32,7 @@ namespace Kavenegar.Test
         // API Tested: POST /v1/{api-key}/line/blocked/add.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender)]
-        public void Test_AddBlockedLine_Real(string apiKey, string receptor, string sender)
+        public void Test_AddBlockedLine(string apiKey, string receptor, string sender)
         {
             var api = new KavenegarApi(apiKey);
             var addedBlock = api.AddBlockedLine(receptor, sender);
@@ -44,7 +44,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender)]
-        public async System.Threading.Tasks.Task Test_AddBlockedLine_Real_Async(string apiKey, string receptor, string sender)
+        public async System.Threading.Tasks.Task Test_AddBlockedLine_Async(string apiKey, string receptor, string sender)
         {
             var api = new KavenegarApi(apiKey);
             var addedBlock = await api.AddBlockedLineAsync(receptor, sender);
@@ -59,7 +59,7 @@ namespace Kavenegar.Test
         // API Tested: DELETE /v1/{api-key}/line/blocked/remove.json
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender)]
-        public void Test_RemoveBlockedLine_Real(string apiKey, string receptor, string sender)
+        public void Test_RemoveBlockedLine(string apiKey, string receptor, string sender)
         {
             var api = new KavenegarApi(apiKey);
             // Ensure blocked first
@@ -71,7 +71,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender)]
-        public async System.Threading.Tasks.Task Test_RemoveBlockedLine_Real_Async(string apiKey, string receptor, string sender)
+        public async System.Threading.Tasks.Task Test_RemoveBlockedLine_Async(string apiKey, string receptor, string sender)
         {
             var api = new KavenegarApi(apiKey);
             // Ensure blocked first
@@ -86,20 +86,20 @@ namespace Kavenegar.Test
         // API Tested: GET /v1/{api-key}/line/blocked/list.json
         [Theory]
         [InlineData(RealApiKey, RealSender)]
-        public void Test_ListBlockedLines_Real(string apiKey, string sender)
+        public void Test_ListBlockedLines(string apiKey, string sender)
         {
             var api = new KavenegarApi(apiKey);
-            var blockedList = api.ListBlockedLines(sender, 1, Kavenegar.Utils.DateHelper.DateTimeToUnixTimestamp(DateTime.UtcNow.AddDays(-1)));
+            var blockedList = api.ListBlockedLines(sender, 1, Kavenegar.Utils.DateHelper.DateTimeToUnixTimestamp(DateTime.Now.AddDays(-1)));
             Assert.NotNull(blockedList);
             Assert.NotNull(blockedList.Entries);
         }
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealSender)]
-        public async System.Threading.Tasks.Task Test_ListBlockedLines_Real_Async(string apiKey, string sender)
+        public async System.Threading.Tasks.Task Test_ListBlockedLines_Async(string apiKey, string sender)
         {
             var api = new KavenegarApi(apiKey);
-            var blockedList = await api.ListBlockedLinesAsync(sender, 1, Kavenegar.Utils.DateHelper.DateTimeToUnixTimestamp(DateTime.UtcNow.AddDays(-1)));
+            var blockedList = await api.ListBlockedLinesAsync(sender, 1, Kavenegar.Utils.DateHelper.DateTimeToUnixTimestamp(DateTime.Now.AddDays(-1)));
             Assert.NotNull(blockedList);
             Assert.NotNull(blockedList.Entries);
         }

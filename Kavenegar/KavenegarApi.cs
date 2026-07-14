@@ -60,19 +60,13 @@ namespace Kavenegar
     internal class ReturnCountOutbox
     {
         public Result result { get; set; }
-        public List<CountOutboxResult> entries { get; set; }
+        public CountOutboxResult entries { get; set; }
     }
 
     internal class ReturnCountInbox
     {
         public Result result { get; set; }
-        public List<CountInboxResult> entries { get; set; }
-    }
-
-    internal class ReturnCountPostalCode
-    {
-        public Result result { get; set; }
-        public List<CountPostalCodeResult> entries { get; set; }
+        public CountInboxResult entries { get; set; }
     }
 
     internal class ReturnAccountInfo
@@ -84,7 +78,7 @@ namespace Kavenegar
     internal class ReturnAccountConfig
     {
         public Result result { get; set; }
-        public AccountConfigResult entries { get; set; }
+        public List<AccountConfigResult> entries { get; set; }
     }
 
     internal class ReturnInboxPaged
@@ -100,14 +94,6 @@ namespace Kavenegar
         public Result result { get; set; }
         public Result @Return { get; set; }
         public List<GroupSendReportResult> entries { get; set; }
-    }
-
-    internal class ReturnSelectGroupSend
-    {
-        public Result result { get; set; }
-        public Result @Return { get; set; }
-        public CursorPaginationModel pagination { get; set; }
-        public List<SendPartyDetailsResult> entries { get; set; }
     }
 
     internal class ReturnSubClient
@@ -350,87 +336,72 @@ namespace Kavenegar
 
 #if !NET35
 
-        private async Task<string> ExecuteAsync(
-            string path,
-            Dictionary<string, object> parameters,
-            string method = "POST",
-            CancellationToken cancellationToken = default)
+        private async Task<string> ExecuteAsync(string path, Dictionary<string, object> _params, string method = "POST", CancellationToken cancellationToken = default)
         {
             var client = _httpClient ?? _defaultHttpClient;
             var requestUri = path;
             HttpContent content = null;
 
-            if (parameters != null && parameters.Count > 0)
+            if (_params != null && _params.Count > 0)
             {
-                var formData = parameters.Select(kvp =>
-                    new KeyValuePair<string, string>(kvp.Key, kvp.Value?.ToString() ?? string.Empty));
+                var postdata = _params.Keys.Aggregate("",
+                    (current, key) => current + string.Format("{0}={1}&", key, _params[key]));
 
-                if (method.Equals("GET", StringComparison.OrdinalIgnoreCase) ||
-                    method.Equals("DELETE", StringComparison.OrdinalIgnoreCase))
+                if (method == "GET" || method == "DELETE")
                 {
-                    using (var tempContent = new FormUrlEncodedContent(formData))
-                    {
-                        var queryString = await tempContent.ReadAsStringAsync().ConfigureAwait(false);
-                        requestUri += (requestUri.Contains('?') ? "&" : "?") + queryString;
-                    }
+                    requestUri += (requestUri.Contains("?") ? "&" : "?") + postdata.TrimEnd('&');
                 }
                 else
                 {
-                    content = new FormUrlEncodedContent(formData);
+                    content = new StringContent(postdata.TrimEnd('&'), Encoding.UTF8,
+                        "application/x-www-form-urlencoded");
                 }
             }
 
-            using (var request = new HttpRequestMessage(new HttpMethod(method), requestUri))
+            var request = new HttpRequestMessage(new HttpMethod(method), requestUri);
+            if (content != null)
             {
-                if (content != null)
-                {
-                    request.Content = content;
-                }
+                request.Content = content;
+            }
 
-                HttpResponseMessage httpResponse;
+            HttpResponseMessage httpResponse;
+            try
+            {
+                httpResponse = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new HttpException(ex.Message, 0);
+            }
+
+            string responseBody = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                ReturnResult result = null;
                 try
                 {
-                    httpResponse = await client.SendAsync(
-                        request,
-                        HttpCompletionOption.ResponseHeadersRead,
-                        cancellationToken).ConfigureAwait(false);
+                    result = JsonConvert.DeserializeObject<ReturnResult>(responseBody);
                 }
-                catch (OperationCanceledException)
+                catch
                 {
-                    throw;
+                    // Ignore parse errors on bad requests
                 }
-                catch (Exception ex)
+
+                if (result != null && result.Return != null)
                 {
-                    throw new HttpException(ex.Message, 0);
+                    throw new ApiException(result.Return.message, result.Return.status);
                 }
 
-                if (!httpResponse.IsSuccessStatusCode)
-                {
-                    using (var responseStream = await httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                    using (var streamReader = new StreamReader(responseStream))
-                    using (var jsonReader = new JsonTextReader(streamReader))
-                    {
-                        ReturnResult result = null;
-                        try
-                        {
-                            var serializer = new JsonSerializer();
-                            result = serializer.Deserialize<ReturnResult>(jsonReader);
-                        }
-                        catch (JsonException)
-                        {
-                        }
-
-                        if (result?.Return != null)
-                        {
-                            throw new ApiException(result.Return.message, result.Return.status);
-                        }
-
-                        throw new HttpException(httpResponse.ReasonPhrase ?? "Unknown Error", (int)httpResponse.StatusCode);
-                    }
-                }
-
-                return await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                throw new HttpException(httpResponse.ReasonPhrase, (int)httpResponse.StatusCode);
             }
+
+            JsonConvert.DeserializeObject<ReturnResult>(responseBody);
+            return responseBody;
         }
 #endif
 
@@ -1255,12 +1226,12 @@ namespace Kavenegar
 
         public List<SendResult> SelectOutbox(DateTime startdate)
         {
-            return SelectOutbox(startdate, DateTime.MaxValue);
+            return SelectOutbox(startdate, startdate.AddDays(1));
         }
 #if !NET35
         public async Task<List<SendResult>> SelectOutboxAsync(DateTime startdate)
         {
-            return await SelectOutboxAsync(startdate, DateTime.MaxValue).ConfigureAwait(false);
+            return await SelectOutboxAsync(startdate, startdate.AddDays(1)).ConfigureAwait(false);
         }
 #endif
 
@@ -1336,12 +1307,12 @@ namespace Kavenegar
 
         public CountOutboxResult CountOutbox(DateTime startdate)
         {
-            return CountOutbox(startdate, DateTime.MaxValue, 10);
+            return CountOutbox(startdate, startdate.AddDays(1), 10);
         }
 #if !NET35
         public async Task<CountOutboxResult> CountOutboxAsync(DateTime startdate)
         {
-            return await CountOutboxAsync(startdate, DateTime.MaxValue, 10).ConfigureAwait(false);
+            return await CountOutboxAsync(startdate,startdate.AddDays(1), 10).ConfigureAwait(false);
         }
 #endif
 
@@ -1367,12 +1338,12 @@ namespace Kavenegar
             };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnCountOutbox>(responsebody);
-            if (l.entries == null || l.entries[0] == null)
+            if (l.entries == null)
             {
                 return new CountOutboxResult();
             }
 
-            return l.entries[0];
+            return l.entries;
         }
 #if !NET35
         public async Task<CountOutboxResult> CountOutboxAsync(DateTime startdate, DateTime enddate, int status)
@@ -1386,12 +1357,12 @@ namespace Kavenegar
             };
             var responsebody = await ExecuteAsync(path, param).ConfigureAwait(false);
             var l = JsonConvert.DeserializeObject<ReturnCountOutbox>(responsebody);
-            if (l.entries == null || l.entries[0] == null)
+            if (l.entries == null)
             {
                 return new CountOutboxResult();
             }
 
-            return l.entries[0];
+            return l.entries;
         }
 #endif
 
@@ -1466,12 +1437,12 @@ namespace Kavenegar
 
         public CountInboxResult CountInbox(DateTime startdate, string linenumber)
         {
-            return CountInbox(startdate, DateTime.MaxValue, linenumber, 0);
+            return CountInbox(startdate, startdate.AddDays(1), linenumber, 0);
         }
 #if !NET35
         public async Task<CountInboxResult> CountInboxAsync(DateTime startdate, string linenumber)
         {
-            return await CountInboxAsync(startdate, DateTime.MaxValue, linenumber, 0).ConfigureAwait(false);
+            return await CountInboxAsync(startdate, startdate.AddDays(1), linenumber, 0).ConfigureAwait(false);
         }
 #endif
 
@@ -1488,7 +1459,7 @@ namespace Kavenegar
 
         public CountInboxResult CountInbox(DateTime startdate, DateTime enddate, String linenumber, int isread)
         {
-            var path = GetApiPath("sms", "countoutbox", "json");
+            var path = GetApiPath("sms", "countinbox", "json");
             var param = new Dictionary<string, object>
             {
                 { "startdate", startdate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(startdate) },
@@ -1498,12 +1469,16 @@ namespace Kavenegar
             };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnCountInbox>(responsebody);
-            return l.entries[0];
+            if (l.entries == null)
+            {
+                return new CountInboxResult();
+            }
+            return l.entries;
         }
 #if !NET35
         public async Task<CountInboxResult> CountInboxAsync(DateTime startdate, DateTime enddate, String linenumber, int isread)
         {
-            var path = GetApiPath("sms", "countoutbox", "json");
+            var path = GetApiPath("sms", "countinbox", "json");
             var param = new Dictionary<string, object>
             {
                 { "startdate", startdate == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(startdate) },
@@ -1513,81 +1488,10 @@ namespace Kavenegar
             };
             var responsebody = await ExecuteAsync(path, param).ConfigureAwait(false);
             var l = JsonConvert.DeserializeObject<ReturnCountInbox>(responsebody);
-            return l.entries[0];
-        }
-#endif
-
-        public List<CountPostalCodeResult> CountPostalCode(long postalcode)
-        {
-            String path = GetApiPath("sms", "countpostalcode", "json");
-            var param = new Dictionary<string, object> { { "postalcode", postalcode } };
-            var responsebody = Execute(path, param);
-            var l = JsonConvert.DeserializeObject<ReturnCountPostalCode>(responsebody);
-            return l.entries;
-        }
-#if !NET35
-        public async Task<List<CountPostalCodeResult>> CountPostalCodeAsync(long postalcode)
-        {
-            String path = GetApiPath("sms", "countpostalcode", "json");
-            var param = new Dictionary<string, object> { { "postalcode", postalcode } };
-            var responsebody = await ExecuteAsync(path, param).ConfigureAwait(false);
-            var l = JsonConvert.DeserializeObject<ReturnCountPostalCode>(responsebody);
-            return l.entries;
-        }
-#endif
-
-        public List<SendResult> SendByPostalCode(long postalcode, String sender, String message, long mcistartIndex,
-            long mcicount, long mtnstartindex, long mtncount)
-        {
-            return SendByPostalCode(postalcode, sender, message, mcistartIndex, mcicount, mtnstartindex, mtncount,
-                DateTime.MinValue);
-        }
-#if !NET35
-        public async Task<List<SendResult>> SendByPostalCodeAsync(long postalcode, String sender, String message, long mcistartIndex,
-            long mcicount, long mtnstartindex, long mtncount)
-        {
-            return await SendByPostalCodeAsync(postalcode, sender, message, mcistartIndex, mcicount, mtnstartindex, mtncount,
-                DateTime.MinValue).ConfigureAwait(false);
-        }
-#endif
-
-        public List<SendResult> SendByPostalCode(long postalcode, String sender, String message, long mcistartIndex,
-            long mcicount, long mtnstartindex, long mtncount, DateTime date)
-        {
-            var path = GetApiPath("sms", "sendbypostalcode", "json");
-            var param = new Dictionary<string, object>
+            if (l.entries == null)
             {
-                { "postalcode", postalcode },
-                { "sender", sender },
-                { "message", HttpUtility.UrlEncodeUnicode(message) },
-                { "mcistartIndex", mcistartIndex },
-                { "mcicount", mcicount },
-                { "mtnstartindex", mtnstartindex },
-                { "mtncount", mtncount },
-                { "date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date) }
-            };
-            var responsebody = Execute(path, param);
-            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
-            return l.entries;
-        }
-#if !NET35
-        public async Task<List<SendResult>> SendByPostalCodeAsync(long postalcode, String sender, String message, long mcistartIndex,
-            long mcicount, long mtnstartindex, long mtncount, DateTime date)
-        {
-            var path = GetApiPath("sms", "sendbypostalcode", "json");
-            var param = new Dictionary<string, object>
-            {
-                { "postalcode", postalcode },
-                { "sender", sender },
-                { "message", HttpUtility.UrlEncodeUnicode(message) },
-                { "mcistartIndex", mcistartIndex },
-                { "mcicount", mcicount },
-                { "mtnstartindex", mtnstartindex },
-                { "mtncount", mtncount },
-                { "date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date) }
-            };
-            var responsebody = await ExecuteAsync(path, param).ConfigureAwait(false);
-            var l = JsonConvert.DeserializeObject<ReturnSend>(responsebody);
+                return new CountInboxResult();
+            }
             return l.entries;
         }
 #endif
@@ -1624,7 +1528,7 @@ namespace Kavenegar
             };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnAccountConfig>(responsebody);
-            return l.entries;
+            return l.entries != null && l.entries.Count > 0 ? l.entries[0] : null;
         }
 #if !NET35
         public async Task<AccountConfigResult> AccountConfigAsync(string apilogs, string dailyreport, string debugmode,
@@ -1642,7 +1546,7 @@ namespace Kavenegar
             };
             var responsebody = await ExecuteAsync(path, param).ConfigureAwait(false);
             var l = JsonConvert.DeserializeObject<ReturnAccountConfig>(responsebody);
-            return l.entries;
+            return l.entries != null && l.entries.Count > 0 ? l.entries[0] : null;
         }
 #endif
 
@@ -1970,14 +1874,13 @@ namespace Kavenegar
         }
 #endif
 
-        public InboxPagedResult InboxPaged(string lineNumber, string line, int? isRead = null,
+        public InboxPagedResult InboxPaged(string lineNumber, int? isRead = null,
             DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null)
         {
             var path = GetApiPath("sms", "inboxpaged", "json");
             var param = new Dictionary<string, object>
             {
-                { "linenumber", lineNumber },
-                { "line", line }
+                { "linenumber", lineNumber }
             };
             if (isRead.HasValue)
                 param.Add("isread", isRead.Value);
@@ -1999,14 +1902,13 @@ namespace Kavenegar
             };
         }
 #if !NET35
-        public async Task<InboxPagedResult> InboxPagedAsync(string lineNumber, string line, int? isRead = null,
+        public async Task<InboxPagedResult> InboxPagedAsync(string lineNumber, int? isRead = null,
             DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null)
         {
             var path = GetApiPath("sms", "inboxpaged", "json");
             var param = new Dictionary<string, object>
             {
-                { "linenumber", lineNumber },
-                { "line", line }
+                { "linenumber", lineNumber }
             };
             if (isRead.HasValue)
                 param.Add("isread", isRead.Value);
@@ -2051,47 +1953,6 @@ namespace Kavenegar
             };
             var responseBody = await ExecuteAsync(path, param, "GET").ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ReturnGroupSendReport>(responseBody).entries;
-        }
-#endif
-
-        public SelectGroupSendResult SelectGroupSend(int partyId, int cursor, int? direction = null)
-        {
-            var path = GetApiPath("sms", "selectgroupsend", "json");
-            var param = new Dictionary<string, object>
-            {
-                { "partyId", partyId },
-                { "cursor", cursor }
-            };
-            if (direction.HasValue)
-                param.Add("direction", direction.Value);
-
-            var responseBody = Execute(path, param, "GET");
-            var r = JsonConvert.DeserializeObject<ReturnSelectGroupSend>(responseBody);
-            return new SelectGroupSendResult
-            {
-                Pagination = r.pagination,
-                Entries = r.entries
-            };
-        }
-#if !NET35
-        public async Task<SelectGroupSendResult> SelectGroupSendAsync(int partyId, int cursor, int? direction = null)
-        {
-            var path = GetApiPath("sms", "selectgroupsend", "json");
-            var param = new Dictionary<string, object>
-            {
-                { "partyId", partyId },
-                { "cursor", cursor }
-            };
-            if (direction.HasValue)
-                param.Add("direction", direction.Value);
-
-            var responseBody = await ExecuteAsync(path, param, "GET").ConfigureAwait(false);
-            var r = JsonConvert.DeserializeObject<ReturnSelectGroupSend>(responseBody);
-            return new SelectGroupSendResult
-            {
-                Pagination = r.pagination,
-                Entries = r.entries
-            };
         }
 #endif
 
@@ -3096,7 +2957,7 @@ namespace Kavenegar
 
 #if !NET35
         private async Task<string> ExecuteMultipartAsync(string path, string fileParamName,
-            string fileName, byte[] fileBytes)
+            string fileName, byte[] fileBytes, CancellationToken cancellationToken = default)
         {
             string mimeType = GetMimeType(fileName);
             var client = _httpClient ?? _defaultHttpClient;
@@ -3116,7 +2977,11 @@ namespace Kavenegar
                 HttpResponseMessage httpResponse;
                 try
                 {
-                    httpResponse = await client.SendAsync(request).ConfigureAwait(false);
+                    httpResponse = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
                 }
                 catch (Exception ex)
                 {
