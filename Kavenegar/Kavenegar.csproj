@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net35</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0;net35</TargetFrameworks>
     <Title>Kavenegar</Title>
     <PackageId>Kavenegar</PackageId>
     <OutputType>Library</OutputType>
@@ -15,12 +15,17 @@
     <PackageReleaseNotes>Force SSL</PackageReleaseNotes>
   </PropertyGroup>
 
-  <!-- Conditionally obtain references for the .NET Framework 3.5 target -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net35'">
+  <PropertyGroup Condition=" '$(NETCoreSdkVersion)' != '' And $(NETCoreSdkVersion.StartsWith('10.')) ">
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0;net10.0;net35</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Conditionally obtain references for .NET Framework targets -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' Or '$(TargetFramework)' == 'net45' Or '$(TargetFramework)' == 'net451' Or '$(TargetFramework)' == 'net452' Or '$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'net47' Or '$(TargetFramework)' == 'net471' Or '$(TargetFramework)' == 'net472' Or '$(TargetFramework)' == 'net48' Or '$(TargetFramework)' == 'net481' ">
     <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
