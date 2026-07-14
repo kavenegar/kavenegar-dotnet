@@ -165,7 +165,7 @@ namespace Kavenegar.Test
             var dto = new TemplateDto
             {
                 Name = "otp-template",
-                TextMessage = "Verification code updated: %token%",
+                TextMessage = "کد تایید بروزرسانی شد: %token%",
                 SourceType = VerificationUsageType.WebApplication,
                 SendMethod = VerificationType.Message
             };
@@ -186,7 +186,7 @@ namespace Kavenegar.Test
             var dto = new TemplateDto
             {
                 Name = "otp-template",
-                TextMessage = "Verification code updated: %token%",
+                TextMessage = "کد تایید بروزرسانی شد: %token%",
                 SourceType = VerificationUsageType.WebApplication,
                 SendMethod = VerificationType.Message
             };
@@ -293,7 +293,7 @@ namespace Kavenegar.Test
             var dto = new TemplateDto
             {
                 Name = "temp" + new Random().Next(1,10000),
-                TextMessage = "Verification code: %token%",
+                TextMessage = "کد تایید: %token%",
                 SourceType = VerificationUsageType.WebApplication,
                 SendMethod = VerificationType.Message
             };
@@ -305,7 +305,7 @@ namespace Kavenegar.Test
             var dto = new TemplateDto
             {
                 Name = "temp" + new Random().Next(1,10000),
-                TextMessage = "Verification code: %token%",
+                TextMessage = "کد تایید: %token%",
                 SourceType = VerificationUsageType.WebApplication,
                 SendMethod = VerificationType.Message
             };

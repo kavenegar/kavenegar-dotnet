@@ -154,7 +154,7 @@ namespace Kavenegar.Test
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("AddContactTest", "SaaS-Contact")[0];
 
-            var contacts = api.AddContact(group.GroupId, receptor, "John Doe Add Contact Test");
+            var contacts = api.AddContact(group.GroupId, receptor, "تست افزودن مخاطب");
             Assert.NotNull(contacts);
 
             // Clean up
@@ -168,7 +168,7 @@ namespace Kavenegar.Test
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("AddContactTest", "SaaS-Contact"))[0];
 
-            var contacts = await api.AddContactAsync(group.GroupId, receptor, "John Doe Add Contact Test");
+            var contacts = await api.AddContactAsync(group.GroupId, receptor, "تست افزودن مخاطب");
             Assert.NotNull(contacts);
 
             // Clean up
@@ -184,7 +184,7 @@ namespace Kavenegar.Test
         {
             var api = new KavenegarApi(apiKey);
             var group = api.AddGroup("RemoveContactTest", "SaaS-RemoveContact")[0];
-            api.AddContact(group.GroupId, receptor, "John Doe Remove Contact Test");
+            api.AddContact(group.GroupId, receptor, "تست حذف مخاطب");
 
             var remainingContacts = api.RemoveContact(null, receptor, group.GroupId);
             Assert.NotNull(remainingContacts);
@@ -199,7 +199,7 @@ namespace Kavenegar.Test
         {
             var api = new KavenegarApi(apiKey);
             var group = (await api.AddGroupAsync("RemoveContactTest", "SaaS-RemoveContact"))[0];
-            await api.AddContactAsync(group.GroupId, receptor, "John Doe Remove Contact Test");
+            await api.AddContactAsync(group.GroupId, receptor, "تست حذف مخاطب");
 
             var remainingContacts = await api.RemoveContactAsync(null, receptor, group.GroupId);
             Assert.NotNull(remainingContacts);

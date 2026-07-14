@@ -152,7 +152,7 @@ namespace Kavenegar.Test
 
         [Theory]
         [InlineData(RealApiKey, RealReceptor, null, "تست ارسال پیشرفته با خط‌مشی", (int)MessageType.MobileMemory, null, null, "local-id-test-12", "mix", null)]
-        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, null, null, "local-id-test-media", "mix", "8c90c180-7b7f-f111-81cb-005056a53592")]
+        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, null, null, "local-id-test-media", "mix", "<put your mediaid here>")]
         [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته بدون خط‌مشی", (int)MessageType.MobileMemory, null, null, "local-id-test-without-policy", null, null)]
         public void Test_Sms_Send_Extended(
             string apiKey, 
@@ -168,7 +168,7 @@ namespace Kavenegar.Test
         {
             var api = new KavenegarApi(apiKey);
             var receptors = new List<string> { receptor };
-            Guid? mediaId = string.IsNullOrEmpty(mediaIdString) || mediaIdString == Guid.Empty.ToString() ? (Guid?)null : Guid.Parse(mediaIdString);
+            Guid? mediaId = Guid.TryParse(mediaIdString, out Guid parsedGuid) ? parsedGuid : (Guid?)null;
             
             string? finalTag = string.IsNullOrEmpty(tag) ? null : tag;
             string? finalHide = string.IsNullOrEmpty(hide) ? null : hide;
@@ -196,7 +196,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, null, "تست ارسال پیشرفته با خط‌مشی", (int)MessageType.MobileMemory, null, null, "local-id-test-12", "mix", null)]
-        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, null, null, "local-id-test-media", "mix", "8c90c180-7b7f-f111-81cb-005056a53592")]
+        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, null, null, "local-id-test-media", "mix", "<put your mediaid here>")]
         [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته بدون خط‌مشی", (int)MessageType.MobileMemory, null, null, "local-id-test-without-policy", null, null)]
         public async Task Test_Sms_Send_Extended_Async(
             string apiKey, 
@@ -212,7 +212,7 @@ namespace Kavenegar.Test
         {
             var api = new KavenegarApi(apiKey);
             var receptors = new List<string> { receptor };
-            Guid? mediaId = string.IsNullOrEmpty(mediaIdString) || mediaIdString == Guid.Empty.ToString() ? (Guid?)null : Guid.Parse(mediaIdString);
+            Guid? mediaId = Guid.TryParse(mediaIdString, out Guid parsedGuid) ? parsedGuid : (Guid?)null;
             
             string? finalTag = string.IsNullOrEmpty(tag) ? null : tag;
             string? finalHide = string.IsNullOrEmpty(hide) ? null : hide;
@@ -343,7 +343,7 @@ namespace Kavenegar.Test
 
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی", (int)MessageType.MobileMemory, "local-id-test", "", "", "mix", null)]
-        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, "local-id-test-media", "", "", "mix", "8c90c180-7b7f-f111-81cb-005056a53592")]
+        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, "local-id-test-media", "", "", "mix", "<put your mediaid here>")]
         [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته بدون خط‌مشی", (int)MessageType.MobileMemory, "local-id-test-without-policy", "", "", null, null)]
         public void Test_Sms_SendArray_Extended(
             string apiKey, 
@@ -362,7 +362,7 @@ namespace Kavenegar.Test
             var receptors = new List<string> { receptor };
             var messages = new List<string> { message };
             var types = new List<MessageType> { (MessageType)type };
-            Guid? mediaId = string.IsNullOrEmpty(mediaIdString) || mediaIdString == Guid.Empty.ToString() ? (Guid?)null : Guid.Parse(mediaIdString);
+            Guid? mediaId = Guid.TryParse(mediaIdString, out Guid parsedGuid) ? parsedGuid : (Guid?)null;
             
             List<string>? finalLocalMessageIds = string.IsNullOrEmpty(localmessageids) ? null : new List<string> { localmessageids };
             string? finalTag = string.IsNullOrEmpty(tag) ? null : tag;
@@ -389,7 +389,7 @@ namespace Kavenegar.Test
 #if !NET35
         [Theory]
         [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی", (int)MessageType.MobileMemory, "local-id-test", "", "", "mix", null)]
-        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, "local-id-test-media", "", "", "mix", "8c90c180-7b7f-f111-81cb-005056a53592")]
+        [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته با خط‌مشی و رسانه", (int)MessageType.MobileMemory, "local-id-test-media", "", "", "mix", "<put your mediaid here>")]
         [InlineData(RealApiKey, RealReceptor, RealSender, "تست ارسال پیشرفته بدون خط‌مشی", (int)MessageType.MobileMemory, "local-id-test-without-policy", "", "", null, null)]
         public async Task Test_Sms_SendArray_Extended_Async(
             string apiKey, 
@@ -408,7 +408,7 @@ namespace Kavenegar.Test
             var receptors = new List<string> { receptor };
             var messages = new List<string> { message };
             var types = new List<MessageType> { (MessageType)type };
-            Guid? mediaId = string.IsNullOrEmpty(mediaIdString) || mediaIdString == Guid.Empty.ToString() ? (Guid?)null : Guid.Parse(mediaIdString);
+            Guid? mediaId = Guid.TryParse(mediaIdString, out Guid parsedGuid) ? parsedGuid : (Guid?)null;
             
             List<string>? finalLocalMessageIds = string.IsNullOrEmpty(localmessageids) ? null : new List<string> { localmessageids };
             string? finalTag = string.IsNullOrEmpty(tag) ? null : tag;
