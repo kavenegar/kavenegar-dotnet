@@ -607,8 +607,7 @@ namespace Kavenegar
 #endif
 
         public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type,
-            DateTime date, List<string> localids, string tag = null, string text = null, string moderator = null,
-            string udh = null, string hide = null, string checkMessageId = null, string localMessageId = null,
+            DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
         {
             var path = GetApiPath("sms", "send", "json");
@@ -627,12 +626,7 @@ namespace Kavenegar
 
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
             if (!string.IsNullOrEmpty(text)) param.Add("text", HttpUtility.UrlEncodeUnicode(text));
-            if (!string.IsNullOrEmpty(moderator))
-                param.Add("moderator", HttpUtility.UrlEncodeUnicode(moderator));
-            if (!string.IsNullOrEmpty(udh)) param.Add("udh", HttpUtility.UrlEncodeUnicode(udh));
             if (!string.IsNullOrEmpty(hide)) param.Add("hide", HttpUtility.UrlEncodeUnicode(hide));
-            if (!string.IsNullOrEmpty(checkMessageId))
-                param.Add("checkmessageid", HttpUtility.UrlEncodeUnicode(checkMessageId));
             if (!string.IsNullOrEmpty(localMessageId))
                 param.Add("localmessageid", HttpUtility.UrlEncodeUnicode(localMessageId));
             if (!string.IsNullOrEmpty(policy)) param.Add("policy", HttpUtility.UrlEncodeUnicode(policy));
@@ -643,8 +637,7 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type,
-            DateTime date, List<string> localids, string tag = null, string text = null, string moderator = null,
-            string udh = null, string hide = null, string checkMessageId = null, string localMessageId = null,
+            DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
         {
             var path = GetApiPath("sms", "send", "json");
@@ -663,12 +656,7 @@ namespace Kavenegar
 
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
             if (!string.IsNullOrEmpty(text)) param.Add("text", HttpUtility.UrlEncodeUnicode(text));
-            if (!string.IsNullOrEmpty(moderator))
-                param.Add("moderator", HttpUtility.UrlEncodeUnicode(moderator));
-            if (!string.IsNullOrEmpty(udh)) param.Add("udh", HttpUtility.UrlEncodeUnicode(udh));
             if (!string.IsNullOrEmpty(hide)) param.Add("hide", HttpUtility.UrlEncodeUnicode(hide));
-            if (!string.IsNullOrEmpty(checkMessageId))
-                param.Add("checkmessageid", HttpUtility.UrlEncodeUnicode(checkMessageId));
             if (!string.IsNullOrEmpty(localMessageId))
                 param.Add("localmessageid", HttpUtility.UrlEncodeUnicode(localMessageId));
             if (!string.IsNullOrEmpty(policy)) param.Add("policy", HttpUtility.UrlEncodeUnicode(policy));
@@ -2689,7 +2677,7 @@ namespace Kavenegar
         }
 #endif
 
-        public List<GroupResult> AddGroup(string name, string tag = null, int? parent = null)
+        public List<GroupResult> AddGroup(string name, string tag = null)
         {
             var path = GetApiPath("group", "addgroup", "json");
             var param = new Dictionary<string, object>
@@ -2697,13 +2685,12 @@ namespace Kavenegar
                 { "name", name }
             };
             if (tag != null) param.Add("tag", tag);
-            if (parent.HasValue) param.Add("parent", parent.Value);
 
             var responseBody = Execute(path, param);
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
-        public async Task<List<GroupResult>> AddGroupAsync(string name, string tag = null, int? parent = null)
+        public async Task<List<GroupResult>> AddGroupAsync(string name, string tag = null)
         {
             var path = GetApiPath("group", "addgroup", "json");
             var param = new Dictionary<string, object>
@@ -2711,7 +2698,6 @@ namespace Kavenegar
                 { "name", name }
             };
             if (tag != null) param.Add("tag", tag);
-            if (parent.HasValue) param.Add("parent", parent.Value);
 
             var responseBody = await ExecuteAsync(path, param).ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
@@ -2766,21 +2752,19 @@ namespace Kavenegar
         }
 #endif
 
-        public List<GroupResult> ListGroups(int? parentId = null)
+        public List<GroupResult> ListGroups()
         {
             var path = GetApiPath("group", "listofgroups", "json");
             var param = new Dictionary<string, object>();
-            if (parentId.HasValue) param.Add("parentid", parentId.Value);
 
             var responseBody = Execute(path, param, "GET");
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
-        public async Task<List<GroupResult>> ListGroupsAsync(int? parentId = null)
+        public async Task<List<GroupResult>> ListGroupsAsync()
         {
             var path = GetApiPath("group", "listofgroups", "json");
             var param = new Dictionary<string, object>();
-            if (parentId.HasValue) param.Add("parentid", parentId.Value);
 
             var responseBody = await ExecuteAsync(path, param, "GET").ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;

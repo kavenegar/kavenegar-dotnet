@@ -120,17 +120,14 @@ namespace Kavenegar
         /// <param name="localids">A list of unique local client IDs for each recipient.</param>
         /// <param name="tag">A custom category tag.</param>
         /// <param name="text">Additional raw text context.</param>
-        /// <param name="moderator">The moderator username/id.</param>
-        /// <param name="udh">User Data Header metadata string.</param>
         /// <param name="hide">Flag to hide message contents in logs.</param>
-        /// <param name="checkMessageId">Flag to enforce message ID matching check.</param>
         /// <param name="localMessageId">A local client message identifier.</param>
         /// <param name="policy">Spam/dispatch filtration policy.</param>
         /// <param name="mediaId">MMS attachment media GUID.</param>
         /// <returns>A list of send result entries.</returns>
-        List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string moderator = null, string udh = null, string hide = null, string checkMessageId = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
+        List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string moderator = null, string udh = null, string hide = null, string checkMessageId = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
+        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
 #endif
 
         /// <summary>
@@ -210,7 +207,6 @@ namespace Kavenegar
         /// <param name="date">The scheduled dispatch date and time.</param>
         /// <param name="localmessageids">A list of local message identifiers.</param>
         /// <param name="tag">A category tag for billing/reports.</param>
-        /// <param name="moderator">The moderator username/id.</param>
         /// <param name="hide">Flag to hide message content in logs.</param>
         /// <param name="causal">The delivery prioritization speed.</param>
         /// <param name="policy">Filtering policies.</param>
@@ -970,11 +966,10 @@ namespace Kavenegar
         /// </summary>
         /// <param name="name">Group label.</param>
         /// <param name="tag">Custom categorization tag.</param>
-        /// <param name="parent">Optional parent folder group ID.</param>
         /// <returns>The created phonebook group metadata.</returns>
-        List<GroupResult> AddGroup(string name, string tag = null, int? parent = null);
+        List<GroupResult> AddGroup(string name, string tag = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<GroupResult>> AddGroupAsync(string name, string tag = null, int? parent = null);
+        System.Threading.Tasks.Task<List<GroupResult>> AddGroupAsync(string name, string tag = null);
 #endif
 
         /// <summary>
@@ -1002,11 +997,10 @@ namespace Kavenegar
         /// <summary>
         /// Lists contact groups in the phonebook.
         /// </summary>
-        /// <param name="parentId">Optional parent folder filter ID.</param>
         /// <returns>A list of phonebook group records.</returns>
-        List<GroupResult> ListGroups(int? parentId = null);
+        List<GroupResult> ListGroups();
 #if !NET35
-        System.Threading.Tasks.Task<List<GroupResult>> ListGroupsAsync(int? parentId = null);
+        System.Threading.Tasks.Task<List<GroupResult>> ListGroupsAsync();
 #endif
 
         /// <summary>

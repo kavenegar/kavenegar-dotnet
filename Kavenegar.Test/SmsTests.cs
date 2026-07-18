@@ -137,7 +137,7 @@ namespace Kavenegar.Test
         public void Test_Sms_Send_Extend()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = api.Send(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null, null, null, null, null);
+            var res = api.Send(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null, null);
             Assert.NotNull(res);
         }
 #if !NET35
@@ -145,7 +145,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Send_Extend_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null, null, null, null, null);
+            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null, null);
             Assert.NotNull(res);
         }
 #endif
