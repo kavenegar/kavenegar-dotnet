@@ -1705,17 +1705,17 @@ namespace Kavenegar
 
         public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
-            return CallMakeTTS(message, receptor, date, localid, null, null, null, null);
+            return CallMakeTTS(message, receptor, date, localid, null, null);
         }
 #if !NET35
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
-            return await CallMakeTTSAsync(message, receptor, date, localid, null, null, null, null).ConfigureAwait(false);
+            return await CallMakeTTSAsync(message, receptor, date, localid, null, null).ConfigureAwait(false);
         }
 #endif
 
         public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid,
-            string sender = null, string tag = null, string policy = null, Guid? mediaId = null)
+            string sender = null, string tag = null)
         {
             var path = GetApiPath("call", "maketts", "json");
             var param = new Dictionary<string, object>
@@ -1729,8 +1729,6 @@ namespace Kavenegar
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
             if (!string.IsNullOrEmpty(sender)) param.Add("sender", HttpUtility.UrlEncodeUnicode(sender));
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
-            if (!string.IsNullOrEmpty(policy)) param.Add("policy", HttpUtility.UrlEncodeUnicode(policy));
-            if (mediaId.HasValue) param.Add("mediaid", mediaId.Value.ToString());
 
             var responseBody = Execute(path, param);
 
@@ -1738,7 +1736,7 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid,
-            string sender = null, string tag = null, string policy = null, Guid? mediaId = null)
+            string sender = null, string tag = null)
         {
             var path = GetApiPath("call", "maketts", "json");
             var param = new Dictionary<string, object>
@@ -1752,8 +1750,6 @@ namespace Kavenegar
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
             if (!string.IsNullOrEmpty(sender)) param.Add("sender", HttpUtility.UrlEncodeUnicode(sender));
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
-            if (!string.IsNullOrEmpty(policy)) param.Add("policy", HttpUtility.UrlEncodeUnicode(policy));
-            if (mediaId.HasValue) param.Add("mediaid", mediaId.Value.ToString());
 
             var responseBody = await ExecuteAsync(path, param).ConfigureAwait(false);
 

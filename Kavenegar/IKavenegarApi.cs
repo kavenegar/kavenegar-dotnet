@@ -619,12 +619,10 @@ namespace Kavenegar
         /// <param name="sender">The caller id/sender number.</param>
         /// <param name="tag">A category tag.</param>
         /// <param name="causal">Call dispatch channel routing priority.</param>
-        /// <param name="policy">Call logic policy.</param>
-        /// <param name="mediaId">Audio file media attachment GUID.</param>
         /// <returns>A list of call result entries.</returns>
-        List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid, string sender = null, string tag = null, string policy = null, Guid? mediaId = null);
+        List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid, string sender = null, string tag = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid, string sender = null, string tag = null, string policy = null, Guid? mediaId = null);
+        System.Threading.Tasks.Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid, string sender = null, string tag = null);
 #endif
 
         /// <summary>
