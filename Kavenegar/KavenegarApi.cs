@@ -1705,17 +1705,17 @@ namespace Kavenegar
 
         public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
-            return CallMakeTTS(message, receptor, date, localid, null, null);
+            return CallMakeTTS(message, receptor, date, localid, null);
         }
 #if !NET35
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
-            return await CallMakeTTSAsync(message, receptor, date, localid, null, null).ConfigureAwait(false);
+            return await CallMakeTTSAsync(message, receptor, date, localid, null).ConfigureAwait(false);
         }
 #endif
 
         public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid,
-            string sender = null, string tag = null)
+            string tag = null)
         {
             var path = GetApiPath("call", "maketts", "json");
             var param = new Dictionary<string, object>
@@ -1727,7 +1727,6 @@ namespace Kavenegar
                 param.Add("date", DateHelper.DateTimeToUnixTimestamp(date.Value));
             if (localid != null && localid.Count > 0)
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
-            if (!string.IsNullOrEmpty(sender)) param.Add("sender", HttpUtility.UrlEncodeUnicode(sender));
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
 
             var responseBody = Execute(path, param);
@@ -1736,7 +1735,7 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid,
-            string sender = null, string tag = null)
+            string tag = null)
         {
             var path = GetApiPath("call", "maketts", "json");
             var param = new Dictionary<string, object>
@@ -1748,7 +1747,6 @@ namespace Kavenegar
                 param.Add("date", DateHelper.DateTimeToUnixTimestamp(date.Value));
             if (localid != null && localid.Count > 0)
                 param.Add("localid", StringHelper.Join(",", localid.ToArray()));
-            if (!string.IsNullOrEmpty(sender)) param.Add("sender", HttpUtility.UrlEncodeUnicode(sender));
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
 
             var responseBody = await ExecuteAsync(path, param).ConfigureAwait(false);
@@ -1797,39 +1795,6 @@ namespace Kavenegar
 
             var responseBody = await ExecuteAsync(path, param).ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ReturnStatus>(responseBody).entries;
-        }
-#endif
-
-        public List<ReceiveResult> MakeReceive(string lineNumber, string sender, string messageId, string message,
-            int isRead)
-        {
-            var path = GetApiPath("sms", "makereceive", "json");
-            var param = new Dictionary<string, object>
-            {
-                { "linenumber", lineNumber },
-                { "sender", sender },
-                { "messageid", messageId },
-                { "message", HttpUtility.UrlEncodeUnicode(message) },
-                { "isread", isRead }
-            };
-            var responseBody = Execute(path, param);
-            return JsonConvert.DeserializeObject<ReturnReceive>(responseBody).entries;
-        }
-#if !NET35
-        public async Task<List<ReceiveResult>> MakeReceiveAsync(string lineNumber, string sender, string messageId, string message,
-            int isRead)
-        {
-            var path = GetApiPath("sms", "makereceive", "json");
-            var param = new Dictionary<string, object>
-            {
-                { "linenumber", lineNumber },
-                { "sender", sender },
-                { "messageid", messageId },
-                { "message", HttpUtility.UrlEncodeUnicode(message) },
-                { "isread", isRead }
-            };
-            var responseBody = await ExecuteAsync(path, param).ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<ReturnReceive>(responseBody).entries;
         }
 #endif
 
@@ -2587,25 +2552,23 @@ namespace Kavenegar
         }
 #endif
 
-        public MediaResult GetMedia(Guid? id = null, string fileName = null, AttachFileSection? section = null)
+        public MediaResult GetMedia(Guid? id = null, string fileName = null)
         {
             var path = GetApiPath("media", "get", "json");
             var param = new Dictionary<string, object>();
             if (id.HasValue) param.Add("id", id.Value);
             if (fileName != null) param.Add("filename", fileName);
-            if (section.HasValue) param.Add("section", (byte)section.Value);
 
             var responseBody = Execute(path, param, "GET");
             return JsonConvert.DeserializeObject<ReturnMedia>(responseBody).entries;
         }
 #if !NET35
-        public async Task<MediaResult> GetMediaAsync(Guid? id = null, string fileName = null, AttachFileSection? section = null)
+        public async Task<MediaResult> GetMediaAsync(Guid? id = null, string fileName = null)
         {
             var path = GetApiPath("media", "get", "json");
             var param = new Dictionary<string, object>();
             if (id.HasValue) param.Add("id", id.Value);
             if (fileName != null) param.Add("filename", fileName);
-            if (section.HasValue) param.Add("section", (byte)section.Value);
 
             var responseBody = await ExecuteAsync(path, param, "GET").ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ReturnMedia>(responseBody).entries;

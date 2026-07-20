@@ -616,13 +616,12 @@ namespace Kavenegar
         /// <param name="receptor">A list of recipients.</param>
         /// <param name="date">Scheduled date and time.</param>
         /// <param name="localid">A list of client local IDs.</param>
-        /// <param name="sender">The caller id/sender number.</param>
         /// <param name="tag">A category tag.</param>
         /// <param name="causal">Call dispatch channel routing priority.</param>
         /// <returns>A list of call result entries.</returns>
-        List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid, string sender = null, string tag = null);
+        List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid, string tag = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid, string sender = null, string tag = null);
+        System.Threading.Tasks.Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid, string tag = null);
 #endif
 
         /// <summary>
@@ -635,20 +634,6 @@ namespace Kavenegar
         List<StatusResult> StatusByReceptor(string receptor, DateTime? startDate = null, DateTime? endDate = null);
 #if !NET35
         System.Threading.Tasks.Task<List<StatusResult>> StatusByReceptorAsync(string receptor, DateTime? startDate = null, DateTime? endDate = null);
-#endif
-
-        /// <summary>
-        /// Simulates or posts a received message transaction for debugging and testing.
-        /// </summary>
-        /// <param name="lineNumber">Recipient line number.</param>
-        /// <param name="sender">Sender phone number.</param>
-        /// <param name="messageId">External message ID.</param>
-        /// <param name="message">Message text content.</param>
-        /// <param name="isRead">0 for unread, 1 for read.</param>
-        /// <returns>A list of simulated inbox logs.</returns>
-        List<ReceiveResult> MakeReceive(string lineNumber, string sender, string messageId, string message, int isRead);
-#if !NET35
-        System.Threading.Tasks.Task<List<ReceiveResult>> MakeReceiveAsync(string lineNumber, string sender, string messageId, string message, int isRead);
 #endif
 
         /// <summary>
@@ -923,15 +908,14 @@ namespace Kavenegar
 #endif
 
         /// <summary>
-        /// Retrieves configurations and attachment sections for a media file.
+        /// Retrieves metadata for a media file.
         /// </summary>
         /// <param name="id">Media file GUID.</param>
         /// <param name="fileName">Alternative lookup filename.</param>
-        /// <param name="section">Attachment section (Voice / Message / etc).</param>
         /// <returns>Media metadata properties.</returns>
-        MediaResult GetMedia(Guid? id = null, string fileName = null, AttachFileSection? section = null);
+        MediaResult GetMedia(Guid? id = null, string fileName = null);
 #if !NET35
-        System.Threading.Tasks.Task<MediaResult> GetMediaAsync(Guid? id = null, string fileName = null, AttachFileSection? section = null);
+        System.Threading.Tasks.Task<MediaResult> GetMediaAsync(Guid? id = null, string fileName = null);
 #endif
 
         /// <summary>

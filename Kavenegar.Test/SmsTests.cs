@@ -841,27 +841,6 @@ namespace Kavenegar.Test
 #endif
 
         [Fact]
-        public void Test_Sms_MakeReceive()
-        {
-            var api = new KavenegarApi(RealApiKey);
-            var sendRes = api.Send(RealSender, RealReceptor, "پیام تست ادغام");
-            Assert.NotNull(sendRes);
-            var result = api.MakeReceive(RealSender, RealReceptor, sendRes.Messageid.ToString(), "پیام تست ادغام", 1);
-            Assert.NotNull(result);
-        }
-#if !NET35
-        [Fact]
-        public async Task Test_Sms_MakeReceive_Async()
-        {
-            var api = new KavenegarApi(RealApiKey);
-            var sendRes = await api.SendAsync(RealSender, RealReceptor, "پیام تست ادغام");
-            Assert.NotNull(sendRes);
-            var result = await api.MakeReceiveAsync(RealSender, RealReceptor, sendRes.Messageid.ToString(), "پیام تست ادغام", 1);
-            Assert.NotNull(result);
-        }
-#endif
-
-        [Fact]
         public void Test_Sms_Unreads()
         {
             var api = new KavenegarApi(RealApiKey);
