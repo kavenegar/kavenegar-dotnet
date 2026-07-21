@@ -485,7 +485,7 @@ namespace Kavenegar
 #if !NET35
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message)
         {
-            return await SendAsync(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue).ConfigureAwait(false);
+            return await SendAsync(sender, receptor, message, DateTime.MinValue).ConfigureAwait(false);
         }
 #endif
 
@@ -496,7 +496,7 @@ namespace Kavenegar
 #if !NET35
         public async Task<SendResult> SendAsync(string sender, String receptor, string message)
         {
-            return await SendAsync(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue).ConfigureAwait(false);
+            return await SendAsync(sender, receptor, message, DateTime.MinValue).ConfigureAwait(false);
         }
 #endif
 
@@ -506,10 +506,10 @@ namespace Kavenegar
             return Send(sender, receptors, message, type, date)[0];
         }
 #if !NET35
-        public async Task<SendResult> SendAsync(string sender, string receptor, string message, MessageType type, DateTime date)
+        public async Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date)
         {
             List<String> receptors = new List<String> { receptor };
-            return (await SendAsync(sender, receptors, message, type, date).ConfigureAwait(false))[0];
+            return (await SendAsync(sender, receptors, message, date).ConfigureAwait(false))[0];
         }
 #endif
 
@@ -519,10 +519,10 @@ namespace Kavenegar
             return Send(sender, receptor, message, type, date, null);
         }
 #if !NET35
-        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type,
+        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
             DateTime date)
         {
-            return await SendAsync(sender, receptor, message, type, date, null).ConfigureAwait(false);
+            return await SendAsync(sender, receptor, message, date, null).ConfigureAwait(false);
         }
 #endif
 
@@ -534,12 +534,12 @@ namespace Kavenegar
             return Send(sender, receptors, message, type, date, localids)[0];
         }
 #if !NET35
-        public async Task<SendResult> SendAsync(string sender, string receptor, string message, MessageType type, DateTime date,
+        public async Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date,
             string localid)
         {
             var receptors = new List<String> { receptor };
             var localids = new List<String> { localid };
-            return (await SendAsync(sender, receptors, message, type, date, localids).ConfigureAwait(false))[0];
+            return (await SendAsync(sender, receptors, message, date, localids).ConfigureAwait(false))[0];
         }
 #endif
 
@@ -550,7 +550,7 @@ namespace Kavenegar
 #if !NET35
         public async Task<SendResult> SendAsync(string sender, string receptor, string message, string localid)
         {
-            return await SendAsync(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue, localid).ConfigureAwait(false);
+            return await SendAsync(sender, receptor, message, DateTime.MinValue, localid).ConfigureAwait(false);
         }
 #endif
 
@@ -573,7 +573,7 @@ namespace Kavenegar
                 localids.Add(localid);
             }
 
-            return await SendAsync(sender, receptors, message, MessageType.MobileMemory, DateTime.MinValue, localids).ConfigureAwait(false);
+            return await SendAsync(sender, receptors, message, DateTime.MinValue, localids).ConfigureAwait(false);
         }
 #endif
 
@@ -591,7 +591,7 @@ namespace Kavenegar
             });
         }
 #if !NET35
-        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type,
+        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
             DateTime date, List<string> localids)
         {
             return await SendAsync(new SendRequest
@@ -599,7 +599,6 @@ namespace Kavenegar
                 Sender = sender,
                 Receptor = receptor,
                 Message = message,
-                Type = type,
                 Date = date,
                 LocalIds = localids
             });
@@ -636,7 +635,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSend>(responseBody).entries;
         }
 #if !NET35
-        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type,
+        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
             DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
         {
@@ -646,7 +645,6 @@ namespace Kavenegar
                 { "sender", HttpUtility.UrlEncodeUnicode(sender) },
                 { "receptor", HttpUtility.UrlEncodeUnicode(StringHelper.Join(",", receptor.ToArray())) },
                 { "message", HttpUtility.UrlEncodeUnicode(message) },
-                { "type", (int)type },
                 { "date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date) }
             };
             if (localids != null && localids.Count > 0)
@@ -755,13 +753,7 @@ namespace Kavenegar
 #if !NET35
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages)
         {
-            var types = new List<MessageType>();
-            for (var i = 0; i <= senders.Count - 1; i++)
-            {
-                types.Add(MessageType.MobileMemory);
-            }
-
-            return await SendArrayAsync(senders, receptors, messages, types, DateTime.MinValue, null).ConfigureAwait(false);
+            return await SendArrayAsync(senders, receptors, messages, DateTime.MinValue, null).ConfigureAwait(false);
         }
 #endif
 
@@ -784,7 +776,7 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages,
-            MessageType type, DateTime date)
+            DateTime date)
         {
             var senders = new List<string>();
             for (var i = 0; i < receptors.Count; i++)
@@ -792,13 +784,7 @@ namespace Kavenegar
                 senders.Add(sender);
             }
 
-            var types = new List<MessageType>();
-            for (var i = 0; i <= senders.Count - 1; i++)
-            {
-                types.Add(MessageType.MobileMemory);
-            }
-
-            return await SendArrayAsync(senders, receptors, messages, types, date, null).ConfigureAwait(false);
+            return await SendArrayAsync(senders, receptors, messages, date, null).ConfigureAwait(false);
         }
 #endif
 
@@ -821,7 +807,7 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages,
-            MessageType type, DateTime date, string localmessageids)
+            DateTime date, string localmessageids)
         {
             var senders = new List<String>();
             for (var i = 0; i < receptors.Count; i++)
@@ -829,13 +815,7 @@ namespace Kavenegar
                 senders.Add(sender);
             }
 
-            List<MessageType> types = new List<MessageType>();
-            for (var i = 0; i <= senders.Count - 1; i++)
-            {
-                types.Add(MessageType.MobileMemory);
-            }
-
-            return await SendArrayAsync(senders, receptors, messages, types, date, new List<String> { localmessageids }).ConfigureAwait(false);
+            return await SendArrayAsync(senders, receptors, messages, date, new List<String> { localmessageids }).ConfigureAwait(false);
         }
 #endif
 
@@ -885,19 +865,13 @@ namespace Kavenegar
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages,
             string localmessageid)
         {
-            var types = new List<MessageType>();
-            for (var i = 0; i <= receptors.Count - 1; i++)
-            {
-                types.Add(MessageType.MobileMemory);
-            }
-
             var localmessageids = new List<string>();
             for (var i = 0; i <= receptors.Count - 1; i++)
             {
                 localmessageids.Add(localmessageid);
             }
 
-            return await SendArrayAsync(senders, receptors, messages, types, DateTime.MinValue, localmessageids).ConfigureAwait(false);
+            return await SendArrayAsync(senders, receptors, messages, DateTime.MinValue, localmessageids).ConfigureAwait(false);
         }
 #endif
 
@@ -916,14 +890,13 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages,
-            List<MessageType> types, DateTime date, List<string> localmessageids)
+            DateTime date, List<string> localmessageids)
         {
             return await SendArrayAsync(new SendArrayRequest
             {
                 Senders = senders,
                 Receptors = receptors,
                 Messages = messages,
-                Types = types,
                 Date = date,
                 LocalMessageIds = localmessageids
             });
@@ -968,20 +941,18 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages,
-            List<MessageType> types, DateTime date, List<string> localmessageids, string tag = null, string hide = null,
+            DateTime date, List<string> localmessageids, string tag = null, string hide = null,
             string policy = null, Guid? mediaId = null)
         {
             String path = GetApiPath("sms", "sendarray", "json");
             var jsonSenders = JsonConvert.SerializeObject(senders);
             var jsonReceptors = JsonConvert.SerializeObject(receptors);
             var jsonMessages = JsonConvert.SerializeObject(messages);
-            var jsonTypes = JsonConvert.SerializeObject(types);
             var param = new Dictionary<string, object>
             {
                 { "message", jsonMessages },
                 { "sender", jsonSenders },
                 { "receptor", jsonReceptors },
-                { "type", jsonTypes },
                 { "date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date) }
             };
             if (localmessageids != null && localmessageids.Count > 0)
@@ -2738,7 +2709,15 @@ namespace Kavenegar
                 { "groupid", groupId }
             };
             if (groupName != null) param.Add("groupname", groupName);
-            if (status.HasValue) param.Add("status", status.Value);
+            if (status.HasValue)
+            {
+                param.Add("status", status.Value);
+            }
+            else
+            {
+                param.Add("status", 1);
+            }
+                
             if (tag != null) param.Add("tag", tag);
 
             var responseBody = Execute(path, param);
@@ -2753,7 +2732,14 @@ namespace Kavenegar
                 { "groupid", groupId }
             };
             if (groupName != null) param.Add("groupname", groupName);
-            if (status.HasValue) param.Add("status", status.Value);
+            if (status.HasValue)
+            {
+                param.Add("status", status.Value);
+            }
+            else
+            {
+                param.Add("status", 1);
+            }
             if (tag != null) param.Add("tag", tag);
 
             var responseBody = await ExecuteAsync(path, param).ConfigureAwait(false);

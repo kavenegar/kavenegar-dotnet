@@ -1,13 +1,14 @@
 using Kavenegar.Models;
 using Kavenegar.Models.Enums;
+using Microsoft.VisualBasic;
 
 namespace Kavenegar.Test
 {
     public class SmsTests
     {
-        private const string RealApiKey = "<put your apikey here>";
-        private const string RealReceptor = "<put your receptor here>";
-        private const string RealSender = "<put your sender here>";
+        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
+        private const string RealReceptor = "09912064992";
+        private const string RealSender = "1000100055";
 
         [Fact]
         public void Test_Sms_Send_Overload_1()
@@ -55,7 +56,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Send_Overload_3_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendAsync(RealSender, RealReceptor, "تست پیام ۳", MessageType.MobileMemory, DateTime.MinValue);
+            var res = await api.SendAsync(RealSender, RealReceptor, "تست پیام ۳", DateTime.MinValue);
             Assert.NotNull(res);
         }
 #endif
@@ -72,7 +73,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Send_Overload_4_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام ۴", MessageType.MobileMemory, DateTime.MinValue);
+            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام ۴", DateTime.MinValue);
             Assert.NotNull(res);
         }
 #endif
@@ -89,7 +90,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Send_Overload_5_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendAsync(RealSender, RealReceptor, "تست پیام ۵", MessageType.MobileMemory, DateTime.MinValue, "localid123");
+            var res = await api.SendAsync(RealSender, RealReceptor, "تست پیام ۵", DateTime.MinValue, "localid123");
             Assert.NotNull(res);
         }
 #endif
@@ -145,7 +146,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Send_Extend_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null, null);
+            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", DateTime.MinValue, null, null, null, null, null, null, null);
             Assert.NotNull(res);
         }
 #endif
@@ -268,7 +269,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_SendArray_Overload_2_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendArrayAsync(RealSender, new List<string> { RealReceptor }, new List<string> { "پیام آرایه ۲" }, MessageType.MobileMemory, DateTime.MinValue);
+            var res = await api.SendArrayAsync(RealSender, new List<string> { RealReceptor }, new List<string> { "پیام آرایه ۲" }, DateTime.MinValue);
             Assert.NotNull(res);
         }
 #endif
@@ -285,7 +286,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_SendArray_Overload_3_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendArrayAsync(RealSender, new List<string> { RealReceptor }, new List<string> { "پیام آرایه ۳" }, MessageType.MobileMemory, DateTime.MinValue, "localmsgid123");
+            var res = await api.SendArrayAsync(RealSender, new List<string> { RealReceptor }, new List<string> { "پیام آرایه ۳" }, DateTime.MinValue, "localmsgid123");
             Assert.NotNull(res);
         }
 #endif
@@ -336,7 +337,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_SendArray_11Params_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendArrayAsync(new List<string> { RealSender }, new List<string> { RealReceptor }, new List<string> { "پیام آرایه قدیمی" }, new List<MessageType> { MessageType.MobileMemory }, DateTime.MinValue, null, null, null, null, null);
+            var res = await api.SendArrayAsync(new List<string> { RealSender }, new List<string> { RealReceptor }, new List<string> { "پیام آرایه قدیمی" }, DateTime.MinValue, null, null, null, null, null);
             Assert.NotNull(res);
         }
 #endif
@@ -483,6 +484,7 @@ namespace Kavenegar.Test
             string localId = "loc_" + DateTime.Now.Ticks;
             var sendRes = api.Send(RealSender, RealReceptor, "تست بررسی وضعیت محلی تکی", localId);
             Assert.NotNull(sendRes);
+            Thread.Sleep(1000);
             var localStatus = api.StatusLocalMessageId(localId);
             Assert.NotNull(localStatus);
         }
@@ -494,6 +496,7 @@ namespace Kavenegar.Test
             string localId = "loc_" + DateTime.Now.Ticks;
             var sendRes = await api.SendAsync(RealSender, RealReceptor, "تست بررسی وضعیت محلی تکی", localId);
             Assert.NotNull(sendRes);
+            await Task.Delay(1000);
             var localStatus = await api.StatusLocalMessageIdAsync(localId);
             Assert.NotNull(localStatus);
         }
@@ -506,6 +509,7 @@ namespace Kavenegar.Test
             string localId = "loc_list_" + DateTime.Now.Ticks;
             var sendRes = api.Send(RealSender, RealReceptor, "تست بررسی وضعیت محلی لیست", localId);
             Assert.NotNull(sendRes);
+            Thread.Sleep(1000);
             var localStatusList = api.StatusLocalMessageId(new List<string> { localId });
             Assert.NotNull(localStatusList);
         }
@@ -517,6 +521,7 @@ namespace Kavenegar.Test
             string localId = "loc_list_" + DateTime.Now.Ticks;
             var sendRes = await api.SendAsync(RealSender, RealReceptor, "تست بررسی وضعیت محلی لیست", localId);
             Assert.NotNull(sendRes);
+            Thread.Sleep(1000);
             var localStatusList = await api.StatusLocalMessageIdAsync(new List<string> { localId });
             Assert.NotNull(localStatusList);
         }
@@ -536,7 +541,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Cancel_Single_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var sendRes = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست لغو پیام زمان‌بندی شده تکی", MessageType.MobileMemory, DateTime.Now.AddHours(2));
+            var sendRes = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست لغو پیام زمان‌بندی شده تکی", DateTime.Now.AddHours(2));
             Assert.NotNull(sendRes);
             var cancel = await api.CancelAsync(sendRes[0].Messageid.ToString());
             Assert.NotNull(cancel);
@@ -557,7 +562,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Cancel_List_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var sendRes = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست لغو پیام زمان‌بندی شده لیست", MessageType.MobileMemory, DateTime.Now.AddHours(2));
+            var sendRes = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست لغو پیام زمان‌بندی شده لیست", DateTime.Now.AddHours(2));
             Assert.NotNull(sendRes);
             var cancelList = await api.CancelAsync(new List<string> { sendRes[0].Messageid.ToString() });
             Assert.NotNull(cancelList);

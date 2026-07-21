@@ -51,7 +51,7 @@ namespace Kavenegar
         /// <returns>A send result entry.</returns>
         SendResult Send(string sender, string receptor, string message, MessageType type, DateTime date);
 #if !NET35
-        System.Threading.Tasks.Task<SendResult> SendAsync(string sender, string receptor, string message, MessageType type, DateTime date);
+        System.Threading.Tasks.Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date);
 #endif
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Kavenegar
         /// <returns>A list of send result entries.</returns>
         List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type, DateTime date);
+        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, DateTime date);
 #endif
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Kavenegar
         /// <returns>A send result entry.</returns>
         SendResult Send(string sender, string receptor, string message, MessageType type, DateTime date, string localid);
 #if !NET35
-        System.Threading.Tasks.Task<SendResult> SendAsync(string sender, string receptor, string message, MessageType type, DateTime date, string localid);
+        System.Threading.Tasks.Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date, string localid);
 #endif
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Kavenegar
         /// <returns>A list of send result entries.</returns>
         List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
+        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
 #endif
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Kavenegar
         /// <returns>A list of send result entries.</returns>
         List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages, MessageType type, DateTime date);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages, MessageType type, DateTime date);
+        System.Threading.Tasks.Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages, DateTime date);
 #endif
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Kavenegar
         /// <returns>A list of send result entries.</returns>
         List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages, MessageType type, DateTime date, string localmessageids);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages, MessageType type, DateTime date, string localmessageids);
+        System.Threading.Tasks.Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages, DateTime date, string localmessageids);
 #endif
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Kavenegar
         /// <returns>A list of send result entries.</returns>
         List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages, List<MessageType> types, DateTime date, List<string> localmessageids, string tag = null, string hide = null, string policy = null, Guid? mediaId = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages, List<MessageType> types, DateTime date, List<string> localmessageids, string tag = null, string hide = null, string policy = null, Guid? mediaId = null);
+        System.Threading.Tasks.Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages, DateTime date, List<string> localmessageids, string tag = null, string hide = null, string policy = null, Guid? mediaId = null);
 #endif
 
         /// <summary>
