@@ -6,9 +6,9 @@ namespace Kavenegar.Test
 {
     public class SmsTests
     {
-        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
-        private const string RealReceptor = "09912064992";
-        private const string RealSender = "1000100055";
+        private const string RealApiKey = "<put your apikey here>";
+        private const string RealReceptor = "<put your receptor here>";
+        private const string RealSender = "<put your sender here>";
 
         [Fact]
         public void Test_Sms_Send_Overload_1()
