@@ -743,7 +743,7 @@ namespace Kavenegar
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages)
         {
             var types = new List<MessageType>();
-            for (var i = 0; i <= senders.Count - 1; i++)
+            for (var i = 0; i < (senders == null ? 0 : senders.Count); i++)
             {
                 types.Add(MessageType.MobileMemory);
             }
@@ -908,8 +908,8 @@ namespace Kavenegar
             string policy = null, Guid? mediaId = null)
         {
             String path = GetApiPath("sms", "sendarray", "json");
-            var jsonSenders = JsonConvert.SerializeObject(senders);
-            var jsonReceptors = JsonConvert.SerializeObject(receptors);
+            var jsonSenders = JsonConvert.SerializeObject(TrimSendArrayValues(senders));
+            var jsonReceptors = JsonConvert.SerializeObject(TrimSendArrayValues(receptors));
             var jsonMessages = JsonConvert.SerializeObject(messages);
             var jsonTypes = JsonConvert.SerializeObject(types);
             var param = new Dictionary<string, object>
@@ -945,8 +945,8 @@ namespace Kavenegar
             string policy = null, Guid? mediaId = null)
         {
             String path = GetApiPath("sms", "sendarray", "json");
-            var jsonSenders = JsonConvert.SerializeObject(senders);
-            var jsonReceptors = JsonConvert.SerializeObject(receptors);
+            var jsonSenders = JsonConvert.SerializeObject(TrimSendArrayValues(senders));
+            var jsonReceptors = JsonConvert.SerializeObject(TrimSendArrayValues(receptors));
             var jsonMessages = JsonConvert.SerializeObject(messages);
             var param = new Dictionary<string, object>
             {
@@ -980,8 +980,8 @@ namespace Kavenegar
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             String path = GetApiPath("sms", "sendarray", "json");
-            var jsonSenders = JsonConvert.SerializeObject(request.Senders);
-            var jsonReceptors = JsonConvert.SerializeObject(request.Receptors);
+            var jsonSenders = JsonConvert.SerializeObject(TrimSendArrayValues(request.Senders));
+            var jsonReceptors = JsonConvert.SerializeObject(TrimSendArrayValues(request.Receptors));
             var jsonMessages = JsonConvert.SerializeObject(request.Messages);
             var jsonTypes = JsonConvert.SerializeObject(request.Types);
             var param = new Dictionary<string, object>
@@ -1019,8 +1019,8 @@ namespace Kavenegar
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             String path = GetApiPath("sms", "sendarray", "json");
-            var jsonSenders = JsonConvert.SerializeObject(request.Senders);
-            var jsonReceptors = JsonConvert.SerializeObject(request.Receptors);
+            var jsonSenders = JsonConvert.SerializeObject(TrimSendArrayValues(request.Senders));
+            var jsonReceptors = JsonConvert.SerializeObject(TrimSendArrayValues(request.Receptors));
             var jsonMessages = JsonConvert.SerializeObject(request.Messages);
             var jsonTypes = JsonConvert.SerializeObject(request.Types);
             var param = new Dictionary<string, object>
@@ -1054,6 +1054,25 @@ namespace Kavenegar
             return l.entries;
         }
 #endif
+
+        private static List<string> TrimSendArrayValues(List<string> values)
+        {
+            var trimmedValues = new List<string>();
+            if (values == null)
+            {
+                return trimmedValues;
+            }
+
+            foreach (var value in values)
+            {
+                if (value != null)
+                {
+                    trimmedValues.Add(value.Trim());
+                }
+            }
+
+            return trimmedValues;
+        }
 
         public List<StatusResult> Status(List<string> messageids)
         {
