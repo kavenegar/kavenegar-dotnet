@@ -117,7 +117,6 @@ namespace Kavenegar
         /// <param name="message">The text body of the message.</param>
         /// <param name="type">The storage or transmission type of the message.</param>
         /// <param name="date">The scheduled dispatch date and time.</param>
-        /// <param name="localids">A list of unique local client IDs for each recipient.</param>
         /// <param name="tag">A custom category tag.</param>
         /// <param name="text">Additional raw text context.</param>
         /// <param name="hide">Flag to hide message contents in logs.</param>
@@ -125,9 +124,9 @@ namespace Kavenegar
         /// <param name="policy">Spam/dispatch filtration policy.</param>
         /// <param name="mediaId">MMS attachment media GUID.</param>
         /// <returns>A list of send result entries.</returns>
-        List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
+        List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type, DateTime date, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
 #if !NET35
-        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
+        System.Threading.Tasks.Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message, DateTime date, string tag = null, string text = null, string hide = null, string localMessageId = null, string policy = null, Guid? mediaId = null);
 #endif
 
         /// <summary>
@@ -208,7 +207,6 @@ namespace Kavenegar
         /// <param name="localmessageids">A list of local message identifiers.</param>
         /// <param name="tag">A category tag for billing/reports.</param>
         /// <param name="hide">Flag to hide message content in logs.</param>
-        /// <param name="causal">The delivery prioritization speed.</param>
         /// <param name="policy">Filtering policies.</param>
         /// <param name="mediaId">MMS attachment GUID.</param>
         /// <returns>A list of send result entries.</returns>
@@ -367,11 +365,11 @@ namespace Kavenegar
         /// <summary>
         /// Cancels scheduled delivery for multiple messages before transmission.
         /// </summary>
-        /// <param name="ids">A list of scheduled message IDs.</param>
+        /// <param name="messageids">A list of scheduled message IDs.</param>
         /// <returns>A list of cancel status results.</returns>
-        List<StatusResult> Cancel(List<String> ids);
+        List<StatusResult> Cancel(List<String> messageids);
 #if !NET35
-        System.Threading.Tasks.Task<List<StatusResult>> CancelAsync(List<String> ids);
+        System.Threading.Tasks.Task<List<StatusResult>> CancelAsync(List<String> messageids);
 #endif
 
         /// <summary>
@@ -579,8 +577,6 @@ namespace Kavenegar
         /// <param name="template">The template name.</param>
         /// <param name="type">Verification type (Sms / Call).</param>
         /// <param name="tag">Custom categorisation tag.</param>
-        /// <param name="primaryCausal">Primary routing channel priority.</param>
-        /// <param name="backupCausal">Fallback routing channel priority.</param>
         /// <returns>A send result entry.</returns>
         SendResult VerifyLookup(string receptor, string token, string token2, string token3, string token10, string token20, string template, VerifyLookupType type, string tag = null);
 #if !NET35
@@ -617,7 +613,6 @@ namespace Kavenegar
         /// <param name="date">Scheduled date and time.</param>
         /// <param name="localid">A list of client local IDs.</param>
         /// <param name="tag">A category tag.</param>
-        /// <param name="causal">Call dispatch channel routing priority.</param>
         /// <returns>A list of call result entries.</returns>
         List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid, string tag = null);
 #if !NET35

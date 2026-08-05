@@ -6,9 +6,9 @@ namespace Kavenegar.Test
 {
     public class SmsTests
     {
-        private const string RealApiKey = "<put your apikey here>";
-        private const string RealReceptor = "<put your receptor here>";
-        private const string RealSender = "<put your sender here>";
+        private const string RealApiKey = "53732F653245324C4651484E5A4F3166354672636A706B564D666D79587566574573344E687A4F65716F733D";
+        private const string RealReceptor = "09912064992";
+        private const string RealSender = "1000100055";
 
         [Fact]
         public void Test_Sms_Send_Overload_1()
@@ -138,7 +138,7 @@ namespace Kavenegar.Test
         public void Test_Sms_Send_Extend()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = api.Send(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null, null);
+            var res = api.Send(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", MessageType.MobileMemory, DateTime.MinValue, null, null, null, null, null, null);
             Assert.NotNull(res);
         }
 #if !NET35
@@ -146,7 +146,7 @@ namespace Kavenegar.Test
         public async Task Test_Sms_Send_Extend_Async()
         {
             var api = new KavenegarApi(RealApiKey);
-            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", DateTime.MinValue, null, null, null, null, null, null, null);
+            var res = await api.SendAsync(RealSender, new List<string> { RealReceptor }, "تست پیام پیشرفته", DateTime.MinValue, null, null, null, null, null, null);
             Assert.NotNull(res);
         }
 #endif

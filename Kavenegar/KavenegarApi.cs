@@ -516,13 +516,26 @@ namespace Kavenegar
         public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type,
             DateTime date)
         {
-            return Send(sender, receptor, message, type, date, null);
+            return Send(new SendRequest
+            {
+                Sender = sender,
+                Receptor = receptor,
+                Message = message,
+                Type = type,
+                Date = date
+            });
         }
 #if !NET35
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
             DateTime date)
         {
-            return await SendAsync(sender, receptor, message, date, null).ConfigureAwait(false);
+            return await SendAsync(new SendRequest
+            {
+                Sender = sender,
+                Receptor = receptor,
+                Message = message,
+                Date = date
+            }).ConfigureAwait(false);
         }
 #endif
 
@@ -531,7 +544,15 @@ namespace Kavenegar
         {
             var receptors = new List<String> { receptor };
             var localids = new List<String> { localid };
-            return Send(sender, receptors, message, type, date, localids)[0];
+            return Send(new SendRequest
+            {
+                Sender = sender,
+                Receptor = receptors,
+                Message = message,
+                Type = type,
+                Date = date,
+                LocalIds = localids
+            })[0];
         }
 #if !NET35
         public async Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date,
@@ -539,7 +560,14 @@ namespace Kavenegar
         {
             var receptors = new List<String> { receptor };
             var localids = new List<String> { localid };
-            return (await SendAsync(sender, receptors, message, date, localids).ConfigureAwait(false))[0];
+            return (await SendAsync(new SendRequest
+            {
+                Sender = sender,
+                Receptor = receptors,
+                Message = message,
+                Date = date,
+                LocalIds = localids
+            }).ConfigureAwait(false))[0];
         }
 #endif
 
@@ -562,7 +590,15 @@ namespace Kavenegar
                 localids.Add(localid);
             }
 
-            return Send(sender, receptors, message, MessageType.MobileMemory, DateTime.MinValue, localids);
+            return Send(new SendRequest
+            {
+                Sender = sender,
+                Receptor = receptors,
+                Message = message,
+                Type = MessageType.MobileMemory,
+                Date = DateTime.MinValue,
+                LocalIds = localids
+            });
         }
 #if !NET35
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptors, string message, string localid)
@@ -573,40 +609,19 @@ namespace Kavenegar
                 localids.Add(localid);
             }
 
-            return await SendAsync(sender, receptors, message, DateTime.MinValue, localids).ConfigureAwait(false);
-        }
-#endif
-
-        public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type,
-            DateTime date, List<string> localids)
-        {
-            return Send(new SendRequest
-            {
-                Sender = sender,
-                Receptor = receptor,
-                Message = message,
-                Type = type,
-                Date = date,
-                LocalIds = localids
-            });
-        }
-#if !NET35
-        public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
-            DateTime date, List<string> localids)
-        {
             return await SendAsync(new SendRequest
             {
                 Sender = sender,
-                Receptor = receptor,
+                Receptor = receptors,
                 Message = message,
-                Date = date,
+                Date = DateTime.MinValue,
                 LocalIds = localids
-            });
+            }).ConfigureAwait(false);
         }
 #endif
 
         public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type,
-            DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null,
+            DateTime date, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
         {
             var path = GetApiPath("sms", "send", "json");
@@ -618,11 +633,6 @@ namespace Kavenegar
                 { "type", (int)type },
                 { "date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date) }
             };
-            if (localids != null && localids.Count > 0)
-            {
-                param.Add("localid", StringHelper.Join(",", localids.ToArray()));
-            }
-
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
             if (!string.IsNullOrEmpty(text)) param.Add("text", HttpUtility.UrlEncodeUnicode(text));
             if (!string.IsNullOrEmpty(hide)) param.Add("hide", HttpUtility.UrlEncodeUnicode(hide));
@@ -636,7 +646,7 @@ namespace Kavenegar
         }
 #if !NET35
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
-            DateTime date, List<string> localids, string tag = null, string text = null, string hide = null, string localMessageId = null,
+            DateTime date, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
         {
             var path = GetApiPath("sms", "send", "json");
@@ -647,11 +657,6 @@ namespace Kavenegar
                 { "message", HttpUtility.UrlEncodeUnicode(message) },
                 { "date", date == DateTime.MinValue ? 0 : DateHelper.DateTimeToUnixTimestamp(date) }
             };
-            if (localids != null && localids.Count > 0)
-            {
-                param.Add("localid", StringHelper.Join(",", localids.ToArray()));
-            }
-
             if (!string.IsNullOrEmpty(tag)) param.Add("tag", HttpUtility.UrlEncodeUnicode(tag));
             if (!string.IsNullOrEmpty(text)) param.Add("text", HttpUtility.UrlEncodeUnicode(text));
             if (!string.IsNullOrEmpty(hide)) param.Add("hide", HttpUtility.UrlEncodeUnicode(hide));
@@ -1344,24 +1349,24 @@ namespace Kavenegar
         }
 #endif
 
-        public List<StatusResult> Cancel(List<String> ids)
+        public List<StatusResult> Cancel(List<String> messageids)
         {
             string path = GetApiPath("sms", "cancel", "json");
             var param = new Dictionary<string, object>
             {
-                { "messageid", StringHelper.Join(",", ids.ToArray()) }
+                { "messageid", StringHelper.Join(",", messageids.ToArray()) }
             };
             var responsebody = Execute(path, param);
             var l = JsonConvert.DeserializeObject<ReturnStatus>(responsebody);
             return l.entries;
         }
 #if !NET35
-        public async Task<List<StatusResult>> CancelAsync(List<String> ids)
+        public async Task<List<StatusResult>> CancelAsync(List<String> messageids)
         {
             string path = GetApiPath("sms", "cancel", "json");
             var param = new Dictionary<string, object>
             {
-                { "messageid", StringHelper.Join(",", ids.ToArray()) }
+                { "messageid", StringHelper.Join(",", messageids.ToArray()) }
             };
             var responsebody = await ExecuteAsync(path, param).ConfigureAwait(false);
             var l = JsonConvert.DeserializeObject<ReturnStatus>(responsebody);
@@ -1371,15 +1376,15 @@ namespace Kavenegar
 
         public StatusResult Cancel(String messageid)
         {
-            var ids = new List<String> { messageid };
-            var result = Cancel(ids);
+            var messageids = new List<String> { messageid };
+            var result = Cancel(messageids);
             return result.Count == 1 ? result[0] : null;
         }
 #if !NET35
         public async Task<StatusResult> CancelAsync(String messageid)
         {
-            var ids = new List<String> { messageid };
-            var result = await CancelAsync(ids).ConfigureAwait(false);
+            var messageids = new List<String> { messageid };
+            var result = await CancelAsync(messageids).ConfigureAwait(false);
             return result.Count == 1 ? result[0] : null;
         }
 #endif
