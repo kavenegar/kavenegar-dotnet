@@ -75,7 +75,7 @@ namespace Kavenegar.Test
             byte[] fileBytes;
             using (var httpClient = new HttpClient())
             {
-                fileBytes = httpClient.GetByteArrayAsync("https://fastly.picsum.photos/id/168/200/200.jpg?hmac=VxnpUGg87Q47YRONmdsU2vNGSPjCs5vrwiAL-0hEIHM").GetAwaiter().GetResult();
+                fileBytes = httpClient.GetByteArrayAsync("https://fastly.picsum.photos/id/237/200/200.jpg?hmac=zHUGikXUDyLCCmvyww1izLK3R3k8oRYBRiTizZEdyfI").GetAwaiter().GetResult();
             }
             var uploaded = api.UploadMedia("temp_get_image.jpg", fileBytes);
 

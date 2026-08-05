@@ -14,5 +14,6 @@ namespace Kavenegar.Models
         public string Resolution { get; set; }
         public MediaFileStatus Status { get; set; }
         public string Status_Desc { get; set; }
+        public MediaReviewResult Review { get; set; }
     }
 }
