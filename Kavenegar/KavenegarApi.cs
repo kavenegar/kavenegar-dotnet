@@ -216,11 +216,13 @@ namespace Kavenegar
 
         private string _apipath = "https://api.kavenegar.com/v1/{0}/{1}/{2}.{3}";
 
+        /// <inheritdoc />
         public KavenegarApi(string apikey)
         {
             _apikey = apikey;
         }
 
+        /// <inheritdoc />
         public KavenegarApi(KavenegarOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -233,17 +235,20 @@ namespace Kavenegar
         private readonly HttpClient _httpClient;
         private static readonly HttpClient _defaultHttpClient = new HttpClient();
 
+        /// <inheritdoc />
         public KavenegarApi(string apikey, HttpClient httpClient)
         {
             _apikey = apikey;
             _httpClient = httpClient;
         }
 
+        /// <inheritdoc />
         public KavenegarApi(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
+        /// <inheritdoc />
         public KavenegarApi(KavenegarOptions options, HttpClient httpClient)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -478,34 +483,40 @@ namespace Kavenegar
             }
         }
 
+        /// <inheritdoc />
         public List<SendResult> Send(string sender, List<string> receptor, string message)
         {
             return Send(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message)
         {
             return await SendAsync(sender, receptor, message, DateTime.MinValue).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult Send(string sender, String receptor, string message)
         {
             return Send(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> SendAsync(string sender, String receptor, string message)
         {
             return await SendAsync(sender, receptor, message, DateTime.MinValue).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult Send(string sender, string receptor, string message, MessageType type, DateTime date)
         {
             List<String> receptors = new List<String> { receptor };
             return Send(sender, receptors, message, type, date)[0];
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date)
         {
             List<String> receptors = new List<String> { receptor };
@@ -513,6 +524,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type,
             DateTime date)
         {
@@ -526,6 +538,7 @@ namespace Kavenegar
             });
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
             DateTime date)
         {
@@ -539,6 +552,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult Send(string sender, string receptor, string message, MessageType type, DateTime date,
             string localid)
         {
@@ -555,6 +569,7 @@ namespace Kavenegar
             })[0];
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> SendAsync(string sender, string receptor, string message, DateTime date,
             string localid)
         {
@@ -571,17 +586,20 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult Send(string sender, string receptor, string message, string localid)
         {
             return Send(sender, receptor, message, MessageType.MobileMemory, DateTime.MinValue, localid);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> SendAsync(string sender, string receptor, string message, string localid)
         {
             return await SendAsync(sender, receptor, message, DateTime.MinValue, localid).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> Send(string sender, List<string> receptors, string message, string localid)
         {
             List<String> localids = new List<String>();
@@ -601,6 +619,7 @@ namespace Kavenegar
             });
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptors, string message, string localid)
         {
             List<String> localids = new List<String>();
@@ -620,6 +639,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> Send(string sender, List<string> receptor, string message, MessageType type,
             DateTime date, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
@@ -645,6 +665,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSend>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendAsync(string sender, List<string> receptor, string message,
             DateTime date, string tag = null, string text = null, string hide = null, string localMessageId = null,
             string policy = null, Guid? mediaId = null)
@@ -670,6 +691,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> Send(SendRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -707,6 +729,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendAsync(SendRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -745,6 +768,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages)
         {
             var types = new List<MessageType>();
@@ -756,12 +780,14 @@ namespace Kavenegar
             return SendArray(senders, receptors, messages, types, DateTime.MinValue, null);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages)
         {
             return await SendArrayAsync(senders, receptors, messages, DateTime.MinValue, null).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages,
             MessageType type, DateTime date)
         {
@@ -780,6 +806,7 @@ namespace Kavenegar
             return SendArray(senders, receptors, messages, types, date, null);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages,
             DateTime date)
         {
@@ -793,6 +820,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages,
             MessageType type, DateTime date, string localmessageids)
         {
@@ -811,6 +839,7 @@ namespace Kavenegar
             return SendArray(senders, receptors, messages, types, date, new List<String>() { localmessageids });
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages,
             DateTime date, string localmessageids)
         {
@@ -824,6 +853,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(string sender, List<string> receptors, List<string> messages,
             string localmessageid)
         {
@@ -836,6 +866,7 @@ namespace Kavenegar
             return SendArray(senders, receptors, messages, localmessageid);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(string sender, List<string> receptors, List<string> messages,
             string localmessageid)
         {
@@ -849,6 +880,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages,
             string localmessageid)
         {
@@ -867,6 +899,7 @@ namespace Kavenegar
             return SendArray(senders, receptors, messages, types, DateTime.MinValue, localmessageids);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages,
             string localmessageid)
         {
@@ -880,6 +913,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages,
             List<MessageType> types, DateTime date, List<string> localmessageids)
         {
@@ -894,6 +928,7 @@ namespace Kavenegar
             });
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages,
             DateTime date, List<string> localmessageids)
         {
@@ -908,6 +943,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(List<string> senders, List<string> receptors, List<string> messages,
             List<MessageType> types, DateTime date, List<string> localmessageids, string tag = null, string hide = null,
             string policy = null, Guid? mediaId = null)
@@ -945,6 +981,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(List<string> senders, List<string> receptors, List<string> messages,
             DateTime date, List<string> localmessageids, string tag = null, string hide = null,
             string policy = null, Guid? mediaId = null)
@@ -981,6 +1018,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SendArray(SendArrayRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -1020,6 +1058,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SendArrayAsync(SendArrayRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -1079,6 +1118,7 @@ namespace Kavenegar
             return trimmedValues;
         }
 
+        /// <inheritdoc />
         public List<StatusResult> Status(List<string> messageids)
         {
             string path = GetApiPath("sms", "status", "json");
@@ -1096,6 +1136,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<StatusResult>> StatusAsync(List<string> messageids)
         {
             string path = GetApiPath("sms", "status", "json");
@@ -1114,6 +1155,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public StatusResult Status(string messageid)
         {
             var ids = new List<String> { messageid };
@@ -1121,6 +1163,7 @@ namespace Kavenegar
             return result.Count == 1 ? result[0] : null;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<StatusResult> StatusAsync(string messageid)
         {
             var ids = new List<String> { messageid };
@@ -1129,6 +1172,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<StatusLocalMessageIdResult> StatusLocalMessageId(List<string> messageids)
         {
             string path = GetApiPath("sms", "statuslocalmessageid", "json");
@@ -1138,6 +1182,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<StatusLocalMessageIdResult>> StatusLocalMessageIdAsync(List<string> messageids)
         {
             string path = GetApiPath("sms", "statuslocalmessageid", "json");
@@ -1148,12 +1193,14 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public StatusLocalMessageIdResult StatusLocalMessageId(string messageid)
         {
             List<StatusLocalMessageIdResult> result = StatusLocalMessageId(new List<String>() { messageid });
             return result.Count == 1 ? result[0] : null;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<StatusLocalMessageIdResult> StatusLocalMessageIdAsync(string messageid)
         {
             List<StatusLocalMessageIdResult> result = await StatusLocalMessageIdAsync(new List<String> { messageid }).ConfigureAwait(false);
@@ -1161,6 +1208,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> Select(List<string> messageids)
         {
             var path = GetApiPath("sms", "select", "json");
@@ -1176,6 +1224,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SelectAsync(List<string> messageids)
         {
             var path = GetApiPath("sms", "select", "json");
@@ -1192,6 +1241,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult Select(string messageid)
         {
             var ids = new List<String> { messageid };
@@ -1199,6 +1249,7 @@ namespace Kavenegar
             return result.Count == 1 ? result[0] : null;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> SelectAsync(string messageid)
         {
             var ids = new List<String> { messageid };
@@ -1207,28 +1258,33 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SelectOutbox(DateTime startdate)
         {
             return SelectOutbox(startdate, startdate.AddDays(1));
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SelectOutboxAsync(DateTime startdate)
         {
             return await SelectOutboxAsync(startdate, startdate.AddDays(1)).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SelectOutbox(DateTime startdate, DateTime enddate)
         {
             return SelectOutbox(startdate, enddate, null);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SelectOutboxAsync(DateTime startdate, DateTime enddate)
         {
             return await SelectOutboxAsync(startdate, enddate, null).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> SelectOutbox(DateTime startdate, DateTime enddate, String sender)
         {
             String path = GetApiPath("sms", "selectoutbox", "json");
@@ -1243,6 +1299,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> SelectOutboxAsync(DateTime startdate, DateTime enddate, String sender)
         {
             String path = GetApiPath("sms", "selectoutbox", "json");
@@ -1258,17 +1315,20 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> LatestOutbox(long pagesize)
         {
             return LatestOutbox(pagesize, "");
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> LatestOutboxAsync(long pagesize)
         {
             return await LatestOutboxAsync(pagesize, "").ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> LatestOutbox(long pagesize, String sender)
         {
             var path = GetApiPath("sms", "latestoutbox", "json");
@@ -1278,6 +1338,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> LatestOutboxAsync(long pagesize, String sender)
         {
             var path = GetApiPath("sms", "latestoutbox", "json");
@@ -1288,28 +1349,33 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public CountOutboxResult CountOutbox(DateTime startdate)
         {
             return CountOutbox(startdate, startdate.AddDays(1), 10);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CountOutboxResult> CountOutboxAsync(DateTime startdate)
         {
             return await CountOutboxAsync(startdate,startdate.AddDays(1), 10).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public CountOutboxResult CountOutbox(DateTime startdate, DateTime enddate)
         {
             return CountOutbox(startdate, enddate, 0);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CountOutboxResult> CountOutboxAsync(DateTime startdate, DateTime enddate)
         {
             return await CountOutboxAsync(startdate, enddate, 0).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public CountOutboxResult CountOutbox(DateTime startdate, DateTime enddate, int status)
         {
             string path = GetApiPath("sms", "countoutbox", "json");
@@ -1329,6 +1395,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CountOutboxResult> CountOutboxAsync(DateTime startdate, DateTime enddate, int status)
         {
             string path = GetApiPath("sms", "countoutbox", "json");
@@ -1349,6 +1416,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<StatusResult> Cancel(List<String> messageids)
         {
             string path = GetApiPath("sms", "cancel", "json");
@@ -1361,6 +1429,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<StatusResult>> CancelAsync(List<String> messageids)
         {
             string path = GetApiPath("sms", "cancel", "json");
@@ -1374,6 +1443,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public StatusResult Cancel(String messageid)
         {
             var messageids = new List<String> { messageid };
@@ -1381,6 +1451,7 @@ namespace Kavenegar
             return result.Count == 1 ? result[0] : null;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<StatusResult> CancelAsync(String messageid)
         {
             var messageids = new List<String> { messageid };
@@ -1389,6 +1460,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<ReceiveResult> Receive(string line, int isread)
         {
             String path = GetApiPath("sms", "receive", "json");
@@ -1403,6 +1475,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<ReceiveResult>> ReceiveAsync(string line, int isread)
         {
             String path = GetApiPath("sms", "receive", "json");
@@ -1418,28 +1491,33 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public CountInboxResult CountInbox(DateTime startdate, string linenumber)
         {
             return CountInbox(startdate, startdate.AddDays(1), linenumber, 0);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CountInboxResult> CountInboxAsync(DateTime startdate, string linenumber)
         {
             return await CountInboxAsync(startdate, startdate.AddDays(1), linenumber, 0).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public CountInboxResult CountInbox(DateTime startdate, DateTime enddate, String linenumber)
         {
             return CountInbox(startdate, enddate, linenumber, 0);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CountInboxResult> CountInboxAsync(DateTime startdate, DateTime enddate, String linenumber)
         {
             return await CountInboxAsync(startdate, enddate, linenumber, 0).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public CountInboxResult CountInbox(DateTime startdate, DateTime enddate, String linenumber, int isread)
         {
             var path = GetApiPath("sms", "countinbox", "json");
@@ -1459,6 +1537,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CountInboxResult> CountInboxAsync(DateTime startdate, DateTime enddate, String linenumber, int isread)
         {
             var path = GetApiPath("sms", "countinbox", "json");
@@ -1479,6 +1558,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public AccountInfoResult AccountInfo()
         {
             var path = GetApiPath("account", "info", "json");
@@ -1487,6 +1567,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<AccountInfoResult> AccountInfoAsync()
         {
             var path = GetApiPath("account", "info", "json");
@@ -1496,6 +1577,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public AccountConfigResult AccountConfig(string apilogs, string dailyreport, string debugmode,
             string defaultsender, int? mincreditalarm, string resendfailed)
         {
@@ -1514,6 +1596,7 @@ namespace Kavenegar
             return l.entries != null && l.entries.Count > 0 ? l.entries[0] : null;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<AccountConfigResult> AccountConfigAsync(string apilogs, string dailyreport, string debugmode,
             string defaultsender, int? mincreditalarm, string resendfailed)
         {
@@ -1533,45 +1616,53 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string template)
         {
             return VerifyLookup(receptor, token, null, null, template, VerifyLookupType.Sms);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string template)
         {
             return await VerifyLookupAsync(receptor, token, null, null, template, VerifyLookupType.Sms).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string template, VerifyLookupType type)
         {
             return VerifyLookup(receptor, token, null, null, template, type);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string template, VerifyLookupType type)
         {
             return await VerifyLookupAsync(receptor, token, null, null, template, type).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string template)
         {
             return VerifyLookup(receptor, token, token2, null, template, VerifyLookupType.Sms);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string template)
         {
             return await VerifyLookupAsync(receptor, token, token2, null, template, VerifyLookupType.Sms).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string template,
             VerifyLookupType type)
         {
             return VerifyLookup(receptor, token, token2, null, template, type);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string template,
             VerifyLookupType type)
         {
@@ -1579,23 +1670,27 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string template)
         {
             return VerifyLookup(receptor, token, token2, token3, template, VerifyLookupType.Sms);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string token3, string template)
         {
             return await VerifyLookupAsync(receptor, token, token2, token3, template, VerifyLookupType.Sms).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string token10,
             string template)
         {
             return VerifyLookup(receptor, token, token2, token3, token10, template, VerifyLookupType.Sms);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string token3, string token10,
             string template)
         {
@@ -1603,12 +1698,14 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string template,
             VerifyLookupType type)
         {
             return VerifyLookup(receptor, token, token2, token3, null, template, type);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string token3, string template,
             VerifyLookupType type)
         {
@@ -1616,12 +1713,14 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string token10,
             string template, VerifyLookupType type)
         {
             return VerifyLookup(receptor, token, token2, token3, token10, null, template, type);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string token3, string token10,
             string template, VerifyLookupType type)
         {
@@ -1629,6 +1728,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SendResult VerifyLookup(string receptor, string token, string token2, string token3, string token10,
             string token20, string template, VerifyLookupType type, string tag = null)
         {
@@ -1651,6 +1751,7 @@ namespace Kavenegar
             return l.entries[0];
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> VerifyLookupAsync(string receptor, string token, string token2, string token3, string token10,
             string token20, string template, VerifyLookupType type, string tag = null)
         {
@@ -1676,39 +1777,46 @@ namespace Kavenegar
 
         #region << CallMakeTTS >>
 
+        /// <inheritdoc />
         public SendResult CallMakeTTS(string message, string receptor)
         {
             return CallMakeTTS(message, new List<string> { receptor }, null, null)[0];
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SendResult> CallMakeTTSAsync(string message, string receptor)
         {
             return (await CallMakeTTSAsync(message, new List<string> { receptor }, null, null).ConfigureAwait(false))[0];
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> CallMakeTTS(string message, List<string> receptor)
         {
             return CallMakeTTS(message, receptor, null, null);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor)
         {
             return await CallMakeTTSAsync(message, receptor, null, null).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
             return CallMakeTTS(message, receptor, date, localid, null);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid)
         {
             return await CallMakeTTSAsync(message, receptor, date, localid, null).ConfigureAwait(false);
         }
 #endif
 
+        /// <inheritdoc />
         public List<SendResult> CallMakeTTS(string message, List<string> receptor, DateTime? date, List<string> localid,
             string tag = null)
         {
@@ -1729,6 +1837,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSend>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SendResult>> CallMakeTTSAsync(string message, List<string> receptor, DateTime? date, List<string> localid,
             string tag = null)
         {
@@ -1754,6 +1863,7 @@ namespace Kavenegar
 
 
         // SMS API Extensions
+        /// <inheritdoc />
         public List<StatusResult> StatusByReceptor(string receptor, DateTime? startDate = null,
             DateTime? endDate = null)
         {
@@ -1773,6 +1883,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnStatus>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<StatusResult>> StatusByReceptorAsync(string receptor, DateTime? startDate = null,
             DateTime? endDate = null)
         {
@@ -1793,6 +1904,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<ReceiveResult> Unreads(string lineNumber, int isRead)
         {
             var path = GetApiPath("sms", "unreads", "json");
@@ -1805,6 +1917,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnReceive>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<ReceiveResult>> UnreadsAsync(string lineNumber, int isRead)
         {
             var path = GetApiPath("sms", "unreads", "json");
@@ -1818,6 +1931,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public InboxPagedResult InboxPaged(string lineNumber, int? isRead = null,
             DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null)
         {
@@ -1846,6 +1960,7 @@ namespace Kavenegar
             };
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<InboxPagedResult> InboxPagedAsync(string lineNumber, int? isRead = null,
             DateTime? startDate = null, DateTime? endDate = null, int? pageNumber = null)
         {
@@ -1875,6 +1990,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<GroupSendReportResult> GroupSendReport(DateTime startDate, DateTime endDate)
         {
             var path = GetApiPath("sms/report", "groupsend", "json");
@@ -1887,6 +2003,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnGroupSendReport>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<GroupSendReportResult>> GroupSendReportAsync(DateTime startDate, DateTime endDate)
         {
             var path = GetApiPath("sms/report", "groupsend", "json");
@@ -1901,6 +2018,7 @@ namespace Kavenegar
 #endif
 
         // Client / Sub-customer API
+        /// <inheritdoc />
         public SubClientResult AddClient(SubClientDto dto)
         {
             var path = GetApiPath("client", "add", "json");
@@ -1924,6 +2042,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> AddClientAsync(SubClientDto dto)
         {
             var path = GetApiPath("client", "add", "json");
@@ -1948,6 +2067,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SubClientResult UpdateClient(SubClientDto dto)
         {
             var path = GetApiPath("client", "update", "json");
@@ -1972,6 +2092,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> UpdateClientAsync(SubClientDto dto)
         {
             var path = GetApiPath("client", "update", "json");
@@ -1997,6 +2118,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<SubClientResult> ListClients()
         {
             var path = GetApiPath("client", "list", "json");
@@ -2004,6 +2126,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClientsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<SubClientResult>> ListClientsAsync()
         {
             var path = GetApiPath("client", "list", "json");
@@ -2012,6 +2135,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SubClientResult FetchClient(string apiKey)
         {
             var path = GetApiPath("client", "fetch", "json");
@@ -2023,6 +2147,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> FetchClientAsync(string apiKey)
         {
             var path = GetApiPath("client", "fetch", "json");
@@ -2035,6 +2160,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SubClientResult FetchClientByLocalId(string localId)
         {
             var path = GetApiPath("client", "fetchbylocalid", "json");
@@ -2046,6 +2172,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> FetchClientByLocalIdAsync(string localId)
         {
             var path = GetApiPath("client", "fetchbylocalid", "json");
@@ -2058,6 +2185,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SubClientResult RenewClientKey(string apiKey = null, string localId = null)
         {
             var path = GetApiPath("client", "renewkey", "json");
@@ -2069,6 +2197,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> RenewClientKeyAsync(string apiKey = null, string localId = null)
         {
             var path = GetApiPath("client", "renewkey", "json");
@@ -2081,6 +2210,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SubClientResult SetClientStatus(string apiKey, int status)
         {
             var path = GetApiPath("client", "setstatus", "json");
@@ -2093,6 +2223,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> SetClientStatusAsync(string apiKey, int status)
         {
             var path = GetApiPath("client", "setstatus", "json");
@@ -2106,6 +2237,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public SubClientResult ChargeClientCredit(string apiKey, long credit, string desc = null, int? vat = null,
             string ip = null)
         {
@@ -2123,6 +2255,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnSubClient>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<SubClientResult> ChargeClientCreditAsync(string apiKey, long credit, string desc = null, int? vat = null,
             string ip = null)
         {
@@ -2142,6 +2275,7 @@ namespace Kavenegar
 #endif
 
         // Line Blocked / Blacklist API
+        /// <inheritdoc />
         public List<BlacklistResult> AddBlockedLine(string receptor, string lineNumber)
         {
             var path = GetApiPath("line/blocked", "add", "json");
@@ -2153,6 +2287,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnBlacklist>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<BlacklistResult>> AddBlockedLineAsync(string receptor, string lineNumber)
         {
             var path = GetApiPath("line/blocked", "add", "json");
@@ -2165,6 +2300,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public RemoveBlacklistResult RemoveBlockedLine(string receptor, string lineNumber)
         {
             var path = GetApiPath("line/blocked", "remove", "json");
@@ -2176,6 +2312,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnRemoveBlacklist>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<RemoveBlacklistResult> RemoveBlockedLineAsync(string receptor, string lineNumber)
         {
             var path = GetApiPath("line/blocked", "remove", "json");
@@ -2188,6 +2325,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public LineBlockListResult ListBlockedLines(string lineNumber, int pageNumber, long startDate,
             byte? blockReason = null)
         {
@@ -2209,6 +2347,7 @@ namespace Kavenegar
             };
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<LineBlockListResult> ListBlockedLinesAsync(string lineNumber, int pageNumber, long startDate,
             byte? blockReason = null)
         {
@@ -2231,6 +2370,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<BlacklistResult> BlockedLineExists(string lineNumber, string receptor)
         {
             var path = GetApiPath("line/blocked", "exists", "json");
@@ -2243,6 +2383,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnBlacklist>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<BlacklistResult>> BlockedLineExistsAsync(string lineNumber, string receptor)
         {
             var path = GetApiPath("line/blocked", "exists", "json");
@@ -2257,6 +2398,7 @@ namespace Kavenegar
 #endif
 
         // Verification Template Management API
+        /// <inheritdoc />
         public List<TemplateResult> ListTemplates(string apiKey = null, string localId = null, int? page = null)
         {
             var path = GetApiPath("verify", "templatelist", "json");
@@ -2269,6 +2411,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnTemplatesList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<TemplateResult>> ListTemplatesAsync(string apiKey = null, string localId = null, int? page = null)
         {
             var path = GetApiPath("verify", "templatelist", "json");
@@ -2282,6 +2425,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public CloneTemplateResult CloneTemplate(int? sourceTemplateId = null, string sourceTemplateName = null,
             string newTemplateName = null, string apiKey = null, string localId = null)
         {
@@ -2297,6 +2441,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnCloneTemplate>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<CloneTemplateResult> CloneTemplateAsync(int? sourceTemplateId = null, string sourceTemplateName = null,
             string newTemplateName = null, string apiKey = null, string localId = null)
         {
@@ -2313,6 +2458,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public TemplateInfoResult AddTemplate(TemplateDto dto)
         {
             var path = GetApiPath("verify", "addtemplate", "json");
@@ -2337,6 +2483,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnTemplateInfo>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<TemplateInfoResult> AddTemplateAsync(TemplateDto dto)
         {
             var path = GetApiPath("verify", "addtemplate", "json");
@@ -2362,6 +2509,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public TemplateInfoResult UpdateTemplate(int templateId, TemplateDto dto)
         {
             var path = GetApiPath("verify", "updatetemplate", "json");
@@ -2389,6 +2537,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnTemplateInfo>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<TemplateInfoResult> UpdateTemplateAsync(int templateId, TemplateDto dto)
         {
             var path = GetApiPath("verify", "updatetemplate", "json");
@@ -2417,6 +2566,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public TemplateResult GetTemplate(int id, string apiKey = null, string localId = null)
         {
             var path = GetApiPath("verify", "gettemplate", "json");
@@ -2431,6 +2581,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnTemplate>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<TemplateResult> GetTemplateAsync(int id, string apiKey = null, string localId = null)
         {
             var path = GetApiPath("verify", "gettemplate", "json");
@@ -2446,6 +2597,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public string DeleteTemplate(int id, string apiKey = null, string localId = null)
         {
             var path = GetApiPath("verify", "deletetemplate", "json");
@@ -2461,6 +2613,7 @@ namespace Kavenegar
             return r.Return?.message;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<string> DeleteTemplateAsync(int id, string apiKey = null, string localId = null)
         {
             var path = GetApiPath("verify", "deletetemplate", "json");
@@ -2478,6 +2631,7 @@ namespace Kavenegar
 #endif
 
         // Media API
+        /// <inheritdoc />
         public MediaResult UploadMedia(string filePath)
         {
             byte[] fileBytes = File.ReadAllBytes(filePath);
@@ -2485,6 +2639,7 @@ namespace Kavenegar
             return UploadMedia(name, fileBytes);
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<MediaResult> UploadMediaAsync(string filePath)
         {
             byte[] fileBytes = File.ReadAllBytes(filePath);
@@ -2493,6 +2648,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public MediaResult UploadMedia(string name, byte[] fileBytes)
         {
             var path = GetApiPath("media", "upload", "json");
@@ -2501,6 +2657,7 @@ namespace Kavenegar
             return l.entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<MediaResult> UploadMediaAsync(string name, byte[] fileBytes)
         {
             var path = GetApiPath("media", "upload", "json");
@@ -2510,6 +2667,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public MediaListResult ListMedia(int? page = null, int? size = null)
         {
             var path = GetApiPath("media", "list", "json");
@@ -2528,6 +2686,7 @@ namespace Kavenegar
             };
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<MediaListResult> ListMediaAsync(int? page = null, int? size = null)
         {
             var path = GetApiPath("media", "list", "json");
@@ -2547,6 +2706,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public MediaResult GetMedia(Guid? id = null, string fileName = null)
         {
             var path = GetApiPath("media", "get", "json");
@@ -2558,6 +2718,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnMedia>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<MediaResult> GetMediaAsync(Guid? id = null, string fileName = null)
         {
             var path = GetApiPath("media", "get", "json");
@@ -2570,6 +2731,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public MediaDeleteResult DeleteMedia(Guid id)
         {
             var path = GetApiPath("media", "delete", "json");
@@ -2581,6 +2743,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnMediaDelete>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<MediaDeleteResult> DeleteMediaAsync(Guid id)
         {
             var path = GetApiPath("media", "delete", "json");
@@ -2594,6 +2757,7 @@ namespace Kavenegar
 #endif
 
         // Contact & Groups API
+        /// <inheritdoc />
         public List<ContactResult> AddContact(int groupId, string number, string title = null, string birthdate = null,
             string email = null, string tags = null)
         {
@@ -2612,6 +2776,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnContactsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<ContactResult>> AddContactAsync(int groupId, string number, string title = null, string birthdate = null,
             string email = null, string tags = null)
         {
@@ -2631,6 +2796,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<GroupResult> AddGroup(string name, string tag = null)
         {
             var path = GetApiPath("group", "addgroup", "json");
@@ -2644,6 +2810,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<GroupResult>> AddGroupAsync(string name, string tag = null)
         {
             var path = GetApiPath("group", "addgroup", "json");
@@ -2658,6 +2825,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<ContactResult> RemoveContact(string contactId = null, string mobile = null, int? groupId = null)
         {
             var path = GetApiPath("contact", "remove", "json");
@@ -2670,6 +2838,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnContactsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<ContactResult>> RemoveContactAsync(string contactId = null, string mobile = null, int? groupId = null)
         {
             var path = GetApiPath("contact", "remove", "json");
@@ -2683,6 +2852,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<GroupResult> RemoveGroup(int groupId)
         {
             var path = GetApiPath("group", "removegroup", "json");
@@ -2694,6 +2864,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<GroupResult>> RemoveGroupAsync(int groupId)
         {
             var path = GetApiPath("group", "removegroup", "json");
@@ -2706,6 +2877,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<GroupResult> ListGroups()
         {
             var path = GetApiPath("group", "listofgroups", "json");
@@ -2715,6 +2887,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<GroupResult>> ListGroupsAsync()
         {
             var path = GetApiPath("group", "listofgroups", "json");
@@ -2725,6 +2898,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<GroupResult> EditGroup(int groupId, string groupName = null, byte? status = null, string tag = null)
         {
             var path = GetApiPath("group", "editgroup", "json");
@@ -2748,6 +2922,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<GroupResult>> EditGroupAsync(int groupId, string groupName = null, byte? status = null, string tag = null)
         {
             var path = GetApiPath("group", "editgroup", "json");
@@ -2771,6 +2946,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public List<GroupResult> SearchGroups(string tag)
         {
             var path = GetApiPath("group", "search", "json");
@@ -2782,6 +2958,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnGroupsList>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<List<GroupResult>> SearchGroupsAsync(string tag)
         {
             var path = GetApiPath("group", "search", "json");
@@ -2795,6 +2972,7 @@ namespace Kavenegar
 #endif
 
         // Utilities API
+        /// <inheritdoc />
         public ServerDateResult GetServerDate()
         {
             var path = GetApiPath("utils", "getdate", "json");
@@ -2802,6 +2980,7 @@ namespace Kavenegar
             return JsonConvert.DeserializeObject<ReturnServerDate>(responseBody).entries;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<ServerDateResult> GetServerDateAsync()
         {
             var path = GetApiPath("utils", "getdate", "json");
@@ -2810,6 +2989,7 @@ namespace Kavenegar
         }
 #endif
 
+        /// <inheritdoc />
         public string Ping()
         {
             var path = GetApiPath("utils", "ping", "json");
@@ -2818,6 +2998,7 @@ namespace Kavenegar
             return r.entries?.Status;
         }
 #if !NET35
+        /// <inheritdoc />
         public async Task<string> PingAsync()
         {
             var path = GetApiPath("utils", "ping", "json");
