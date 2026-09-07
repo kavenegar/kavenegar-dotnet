@@ -11,11 +11,23 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/kavenegar/kavenegar-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kavenegar/kavenegar-dotnet</RepositoryUrl>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>Force SSL</PackageReleaseNotes>
+    <Version>2.0.1</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>
+- Multi-target framework support (.NET 10, .NET 8, .NET 6, .NET Standard 2.0, .NET Framework 3.5).
+- Full asynchronous API support (SendAsync, VerifyLookupAsync, etc.) with connection pooling.
+- ASP.NET Core Dependency Injection integration (AddHttpClient&lt;IKavenegarApi, KavenegarApi&gt;).
+- Enhanced exception handling with ApiException and HttpException.
+- Modernized package documentation and NuGet README.
+- Enforced SSL/TLS secure communication endpoints.
+    </PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.nuget.md" Pack="true" PackagePath="\README.md" />
+  </ItemGroup>
 
   <!-- Conditionally obtain references for .NET Framework targets -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'net35' Or '$(TargetFramework)' == 'net45' Or '$(TargetFramework)' == 'net451' Or '$(TargetFramework)' == 'net452' Or '$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'net47' Or '$(TargetFramework)' == 'net471' Or '$(TargetFramework)' == 'net472' Or '$(TargetFramework)' == 'net48' Or '$(TargetFramework)' == 'net481' ">
